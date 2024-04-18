@@ -57,7 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: const Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          BtnCurrentLocation()
+          BtnFollowUser(),
+          BtnCurrentLocation(),
       ]),
 
    );
