@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peluquerias/config/blocs/blocs.dart';
+import 'package:peluquerias/presentation/views/views.dart';
+import 'package:peluquerias/presentation/widgets/widgets.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -33,10 +35,31 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Hola Mundo'),
-     ),
+    return Scaffold(
+      body: BlocBuilder<LocationBloc, LocationState>(
+        builder: (context, state) {
+
+          if ( state.lastKnownLocation == null ) return const Center( child: Text('Espere por favor...'));
+
+          return SingleChildScrollView(
+            child: Stack(
+              children: [
+                MapView( initialLocation: state.lastKnownLocation! ),
+          
+                // TODO: botones...
+                
+              ],
+            ),
+          );
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: const Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          BtnCurrentLocation()
+      ]),
+
    );
   }
 }
