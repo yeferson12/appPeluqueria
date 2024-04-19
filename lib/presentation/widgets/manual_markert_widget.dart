@@ -76,21 +76,18 @@ class _ManualMarkerBody extends StatelessWidget {
                 
                   // Todo: loading
 
-                  // final start = locationBloc.state.lastKnownLocation;
-                  // if ( start == null ) return;
+                  final start = locationBloc.state.lastKnownLocation;
+                  if ( start == null ) return;
 
-                  // final end = mapBloc.mapCenter;
-                  // if ( end == null ) return;
+                  final end = mapBloc.mapCenter;
+                  if ( end == null ) return;
 
-                  // // showLoadingMessage(context);
+                  // showLoadingMessage(context);
 
 
-                  // final destination = await searchBloc.getCoorsStartToEnd(start, end);
-                  // await mapBloc.drawRoutePolyline(destination);
+                  final destination = await searchBloc.getCoorsStartToEnd(start, end);
+                  mapBloc.drawRoutePolyline(destination);
                   
-                  // // searchBloc.add( OnDeactivateManualMarkerEvent());
-
-                  // Navigator.pop(context);
                   
                 },
               ),

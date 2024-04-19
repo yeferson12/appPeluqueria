@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:peluquerias/config/blocs/blocs.dart';
 import 'package:peluquerias/config/router/app_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:peluquerias/presentation/services/services.dart';
 
 void main() {
   runApp( 
@@ -10,7 +11,7 @@ void main() {
         BlocProvider(create: (context) => GpsBloc() ),
         BlocProvider(create: (context) => LocationBloc() ),
         BlocProvider(create: (context) => MapBloc(locationBloc: BlocProvider.of<LocationBloc>(context)) ),
-        BlocProvider(create: (context) => SearchBloc() ),
+        BlocProvider(create: (context) => SearchBloc( walkinService: WalkingService()) ),
       ],
       child: const MyApp(),
     )
