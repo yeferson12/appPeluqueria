@@ -47,7 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 MapView( initialLocation: state.lastKnownLocation! ),
           
                 // TODO: botones...
-                const SearchBarWidget()
+                const SearchBarWidget(),
+                const ManualMarker()
               ],
             ),
           );

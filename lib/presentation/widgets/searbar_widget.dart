@@ -1,7 +1,11 @@
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peluquerias/config/delegates/delegates.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../config/blocs/blocs.dart';
+import '../../infrastruture/models/models.dart';
 
 class SearchBarWidget extends StatelessWidget {
   const SearchBarWidget({Key? key}) : super(key: key);
@@ -9,17 +13,16 @@ class SearchBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return const _SearchBarBody();
-    // return BlocBuilder<SearchBloc, SearchState>(
-    //   builder: (context, state) {
-    //     return state.displayManualMarker 
-    //       ? const SizedBox()
-    //       : FadeInDown(
-    //         duration: const Duration( milliseconds: 300 ),
-    //         child: const _SearchBarBody()
-    //       );
-    //   },
-    // );
+    return BlocBuilder<SearchBloc, SearchState>(
+      builder: (context, state) {
+        return state.displayManualMarker 
+          ? const SizedBox()
+          : FadeInDown(
+            duration: const Duration( milliseconds: 300 ),
+            child: const _SearchBarBody()
+          );
+      },
+    );
   }
 }
 
@@ -27,17 +30,17 @@ class SearchBarWidget extends StatelessWidget {
 class _SearchBarBody extends StatelessWidget {
   const _SearchBarBody({Key? key}) : super(key: key);
 
-  // void onSearchResults( BuildContext context, SearchResult result ) {
+  void onSearchResults( BuildContext context, SearchResult result ) {
     
-  //   final searchBloc = BlocProvider.of<SearchBloc>(context);
+    final searchBloc = BlocProvider.of<SearchBloc>(context);
 
-  //   if ( result.manual == true ) {
-  //     searchBloc.add( OnActivateManualMarkerEvent() );
-  //     return;
-  //   }
+    if ( result.manual == true ) {
+      searchBloc.add( OnActivateManualMarkerEvent() );
+      return;
+    }
 
 
-  // }
+  }
 
 
   @override
@@ -52,7 +55,7 @@ class _SearchBarBody extends StatelessWidget {
             final result = await showSearch(context: context, delegate: SearchDestinationDelegate());
             if ( result == null ) return;
 
-            // onSearchResults( context, result );
+            onSearchResults( context, result );
 
           },
           child: Container(

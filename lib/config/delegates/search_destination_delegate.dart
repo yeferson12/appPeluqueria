@@ -43,7 +43,6 @@ class SearchDestinationDelegate extends SearchDelegate<SearchResult>{
           leading: const Icon( Icons.location_on_outlined, color: Colors.black ),
           title: const Text('Colocar la ubicación manualmente', style: TextStyle( color: Colors.black )),
           onTap: () {
-            // TODO: regresar algo...
 
 
             final result = SearchResult( cancel: false, manual: true );
