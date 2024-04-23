@@ -11,13 +11,19 @@ part 'search_state.dart';
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   WalkingService walkinService;
+  SearchPlacesService searchPlacesService;
 
   SearchBloc({
-     required this.walkinService
+     required this.walkinService,
+     required this.searchPlacesService
     }) : super(const SearchState()) {
 
     on<OnActivateManualMarkerEvent>((event, emit) => emit( state.copyWith( displayManualMarker: true ) ) );
     on<OnDeactivateManualMarkerEvent>((event, emit) => emit( state.copyWith( displayManualMarker: false ) ) );
+
+    on<OnNewPlacesFoundEvent>((event, emit) =>  emit( state.copyWith( places: event.places ) ) );
+
+    on<AddToHistoryEvent>((event, emit) =>  emit( state.copyWith( history: [ event.place, ...state.history ] ) ) );
 
   }
 
@@ -39,5 +45,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       duration: duration,
     );
 
+  }
+
+  Future getPlacesByQuery( LatLng proximity, String query ) async {
+
+    final newPlaces = await searchPlacesService.getResultsByQuery(proximity, query);
+
+    add( OnNewPlacesFoundEvent( newPlaces ) );
   }
 }
