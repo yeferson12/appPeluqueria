@@ -28,7 +28,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnMapInitialzedEvent>( _onInitMap );
     on<OnStartFollowingUserEvent>( _onStartFollowingUser );
     on<OnStopFollowingUserEvent>((event, emit) => emit( state.copyWith( followUser: false ) ));
-    on<DisplayPolylinesEvent>((event, emit) => emit( state.copyWith( polylines: event.polylines ) ));
+    on<DisplayPolylinesEvent>((event, emit) => emit( state.copyWith( polylines: event.polylines, markers: event.markers ) ));
 
     locationStateSubscription = locationBloc.stream.listen(( locationState ) {
 
@@ -75,12 +75,52 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       endCap: Cap.roundCap,
     );
 
+    double kms = destination.distance / 1000;
+    kms = (kms * 100).floorToDouble();
+    kms /= 100;
+
+    int tripDuration = (destination.duration / 60).floorToDouble().toInt();
+
+    // final startMaker = await getStartCustomMarker( tripDuration, 'Mi ubicación' );
+    // final endMaker = await getEndCustomMarker( kms.toInt(), destination.endPlace.text );
+
+    final startMarker = Marker(
+      // anchor: const Offset(0.1, 1),
+      markerId: const MarkerId('start'),
+      position: destination.points.first,
+      // icon: startMaker,
+      infoWindow: InfoWindow(
+        title: 'Inicio',
+        snippet: 'Kms: $kms, duration: $tripDuration',
+      )
+    );
+
+    final endMarker = Marker(
+      markerId: const MarkerId('end'),
+      position: destination.points.last,
+      // icon: endMaker,
+      // anchor: const Offset(0,0),
+      infoWindow: InfoWindow(
+        title: destination.endPlace.properties.name,
+        snippet: destination.endPlace.properties.namePreferred,
+      )
+    );
+
 
     final curretPolylines = Map<String, Polyline>.from( state.polylines );
     curretPolylines['route'] = myRoute;
 
 
-    add( DisplayPolylinesEvent( curretPolylines ) );
+    final currentMarkers = Map<String, Marker>.from( state.markers );
+
+    currentMarkers['start'] = startMarker;
+    currentMarkers['end'] = endMarker;
+
+
+    add( DisplayPolylinesEvent( curretPolylines, currentMarkers ) );
+
+    // await Future.delayed( const Duration( milliseconds: 300 ));
+    // _mapController?.showMarkerInfoWindow(const MarkerId('start'));
 
   }
 

@@ -47,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     MapView(
                       initialLocation: state.lastKnownLocation!,
                       polylines: mapState.polylines.values.toSet(),
+                      markers: mapState.markers.values.toSet(),
                       ),
                     // TODO: botones...
                     const SearchBarWidget(),

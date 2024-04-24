@@ -31,6 +31,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
     final walkingResponse =  await walkinService.getCoorsStartToEnd(start, end);
 
+    final endPlace = await searchPlacesService.getInformationByCoors( end );
+
     final geometry =  walkingResponse.routes[0].geometry;
     final distance =  walkingResponse.routes[0].distance;
     final duration =  walkingResponse.routes[0].duration;
@@ -43,6 +45,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       points: latlngList,
       distance: distance,
       duration: duration,
+      endPlace: endPlace
     );
 
   }
