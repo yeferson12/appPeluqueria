@@ -9,6 +9,8 @@ import 'package:peluquerias/config/blocs/location/location_bloc.dart';
 import 'package:peluquerias/config/theme/themes.dart';
 
 import '../../../infrastruture/models/models.dart';
+import '../../../presentation/ui/ui.dart';
+import '../../helpers/helpers.dart';
 
 part 'map_event.dart';
 part 'map_state.dart';
@@ -81,29 +83,29 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
     int tripDuration = (destination.duration / 60).floorToDouble().toInt();
 
-    // final startMaker = await getStartCustomMarker( tripDuration, 'Mi ubicación' );
-    // final endMaker = await getEndCustomMarker( kms.toInt(), destination.endPlace.text );
+    final startMaker = await getMarkerPainterBitmap( StartMarkerPainter(minutes: tripDuration, destination: 'Mi ubicación') );
+    final endMaker = await getMarkerPainterBitmap( EndMarkerPainter(kilometers: kms.toInt(), destination: destination.endPlace.properties.name) );
 
     final startMarker = Marker(
-      // anchor: const Offset(0.1, 1),
+      anchor: const Offset(0.1, 1),
       markerId: const MarkerId('start'),
       position: destination.points.first,
-      // icon: startMaker,
-      infoWindow: InfoWindow(
-        title: 'Inicio',
-        snippet: 'Kms: $kms, duration: $tripDuration',
-      )
+      icon: startMaker,
+      // infoWindow: InfoWindow(
+      //   title: 'Inicio',
+      //   snippet: 'Kms: $kms, duration: $tripDuration',
+      // )
     );
 
     final endMarker = Marker(
       markerId: const MarkerId('end'),
       position: destination.points.last,
-      // icon: endMaker,
+      icon: endMaker,
       // anchor: const Offset(0,0),
-      infoWindow: InfoWindow(
-        title: destination.endPlace.properties.name,
-        snippet: destination.endPlace.properties.namePreferred,
-      )
+      // infoWindow: InfoWindow(
+      //   title: destination.endPlace.properties.name,
+      //   snippet: destination.endPlace.properties.namePreferred,
+      // )
     );
 
 
