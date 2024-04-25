@@ -22,8 +22,9 @@ class BackGroud extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                    Color.fromARGB(255, 84, 55, 107),
-                    Color.fromARGB(255, 61, 0, 108),
+                    // Color.fromARGB(255, 84, 55, 107),
+                    // Color.fromARGB(255, 61, 0, 108),
+                    Color.fromARGB(255, 113, 1, 158),
                     Color.fromARGB(255, 113, 1, 158),
                   ])),
             ),
@@ -50,7 +51,6 @@ class BackGroud extends StatelessWidget {
                     default:
                   }
                 },
-                currentIndex: 0,
               ),
             ) // Índice actualmente seleccionado)
           ],

@@ -25,7 +25,7 @@ class AnimationDrawer extends StatelessWidget {
     return BlocBuilder<DrawerBloc, DrawerState>(
       builder: (context, state) {
         return Container(
-          margin: const EdgeInsets.only(bottom: 80),
+          margin: const EdgeInsets.only(bottom: 80, left: 5, right: 5),
           child: ClipRRect(
               borderRadius: state.isTab == 0
                   ? const BorderRadius.only(

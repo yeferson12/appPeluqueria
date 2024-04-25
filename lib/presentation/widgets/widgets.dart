@@ -4,3 +4,4 @@ export 'package:peluquerias/presentation/widgets/btn_follow_user_ui.dart';
 export './searbar_widget.dart';
 export './manual_markert_widget.dart';
 export './botton_navigatorbar_widget.dart';
+export './btn_float_widget.dart';

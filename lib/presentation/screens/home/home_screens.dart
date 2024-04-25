@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peluquerias/config/blocs/blocs.dart';
 
 import '../../ui/ui.dart';
+import '../../widgets/btn_follow_user_ui.dart';
+import '../../widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -63,12 +65,13 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      // floatingActionButton:
-      //     const Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-      //   BtnFollowUser(),
-      //   BtnCurrentLocation(),
-      // ]),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton:
+          const Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+            BtnFloatWidget(),
+        // BtnFollowUser(),
+        // BtnCurrentLocation(),
+      ]),
     );
   }
 
