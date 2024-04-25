@@ -20,3 +20,8 @@ class DisplayPolylinesEvent extends MapEvent {
   final Map<String, Marker> markers;
   const DisplayPolylinesEvent(this.polylines, this.markers);
 }
+
+class OnGetMarkersBarber extends MapEvent {
+  final Map<String, Marker> markers;
+  const OnGetMarkersBarber(this.markers);
+}

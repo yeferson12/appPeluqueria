@@ -7,13 +7,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart' show BitmapDescrip
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../../../presentation/ui/ui.dart';
-
-Future<BitmapDescriptor> getAssetImageMarker( String img) async {
+Future<BitmapDescriptor> getAssetImageMarker({
+    String img = 'assets/barber1.png',
+    double size = 9
+  }) async {
 
   return BitmapDescriptor.fromAssetImage(
-    const ImageConfiguration(
-      devicePixelRatio: 2.5
+     ImageConfiguration(
+      size: Size(size, size)
     ), 
     img
   );
@@ -36,7 +37,7 @@ Future<BitmapDescriptor> getNetworkImageMarker() async {
     final data = await frame.image.toByteData( format: ui.ImageByteFormat.png );
 
     if ( data == null ) {
-      return await getAssetImageMarker( 'assets/custom-pin.png' );
+      return await getAssetImageMarker( img: 'assets/barber1.png', size: 50 );
     }
 
     return BitmapDescriptor.fromBytes( data.buffer.asUint8List() );

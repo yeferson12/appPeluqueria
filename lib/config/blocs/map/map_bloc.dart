@@ -9,6 +9,7 @@ import 'package:peluquerias/config/blocs/location/location_bloc.dart';
 import 'package:peluquerias/config/theme/themes.dart';
 
 import '../../../infrastruture/models/models.dart';
+import '../../../presentation/services/services.dart';
 import '../../../presentation/ui/ui.dart';
 import '../../helpers/helpers.dart';
 
@@ -31,6 +32,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnStartFollowingUserEvent>( _onStartFollowingUser );
     on<OnStopFollowingUserEvent>((event, emit) => emit( state.copyWith( followUser: false ) ));
     on<DisplayPolylinesEvent>((event, emit) => emit( state.copyWith( polylines: event.polylines, markers: event.markers ) ));
+    on<OnGetMarkersBarber>( (event, emit) => emit( state.copyWith( markers: event.markers )), );
 
     locationStateSubscription = locationBloc.stream.listen(( locationState ) {
 
@@ -123,6 +125,28 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
     // await Future.delayed( const Duration( milliseconds: 300 ));
     // _mapController?.showMarkerInfoWindow(const MarkerId('start'));
+
+  }
+
+  Future getBarberMarkes( ) async {
+
+    final LocationBarberservices barberService = LocationBarberservices();
+
+    final barbers = await barberService.getLocationBarberService();
+    final markers = <String, Marker>{};
+
+    final iconBarber = await getAssetImageMarker( img: 'assets/barber1.png', size: 5 );
+
+      barbers.asMap().forEach((index, barber) {
+    final marker = Marker(
+      markerId: MarkerId('${barber.name}_$index'),
+      position: barber.location,
+      icon: iconBarber,
+    );
+    markers['${barber.name}_$index'] = marker;
+  });
+
+  add(OnGetMarkersBarber(markers));
 
   }
 

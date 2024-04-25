@@ -1,8 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peluquerias/config/blocs/blocs.dart';
-import 'package:peluquerias/presentation/views/views.dart';
-import 'package:peluquerias/presentation/widgets/widgets.dart';
+
+import '../../ui/ui.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,6 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     locationBloc = BlocProvider.of<LocationBloc>(context);
+    final macBloc = BlocProvider.of<MapBloc>(context);
+
+    macBloc.getBarberMarkes();
     locationBloc.getCurrentPosition();
     locationBloc.startFollowingUser();
   }
@@ -41,30 +45,31 @@ class _HomeScreenState extends State<HomeScreen> {
 
           return BlocBuilder<MapBloc, MapState>(
             builder: (context, mapState) {
-              return SingleChildScrollView(
-                child: Stack(
+              return   Stack(
                   children: [
-                    MapView(
+                    const BackGroud(),
+                    AnimationDrawer(
                       initialLocation: state.lastKnownLocation!,
                       polylines: mapState.polylines.values.toSet(),
                       markers: mapState.markers.values.toSet(),
                       ),
-                    // TODO: botones...
-                    const SearchBarWidget(),
-                    const ManualMarker()
+                    
+                    // const SearchBarWidget(),
+                    // const ManualMarker(),
+                    
                   ],
-                ),
-              );
+                );
             },
           );
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton:
-          const Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-        BtnFollowUser(),
-        BtnCurrentLocation(),
-      ]),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      // floatingActionButton:
+      //     const Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+      //   BtnFollowUser(),
+      //   BtnCurrentLocation(),
+      // ]),
     );
   }
+
 }
