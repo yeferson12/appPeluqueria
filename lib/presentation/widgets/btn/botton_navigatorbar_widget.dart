@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../config/blocs/blocs.dart';
+import '../../../config/blocs/blocs.dart';
 
 class BottonNavigatorBarWidget extends StatelessWidget {
   final List<IconData> icons;
@@ -49,9 +49,6 @@ class BottonNavigatorBarWidget extends StatelessWidget {
                     const SizedBox(height: 4.0),
                     Text(
                       labels[index],
-                      style: TextStyle(
-                        // color: iconColor,
-                      ),
                     ),
                   ],
                 ),

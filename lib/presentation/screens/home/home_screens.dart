@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peluquerias/config/blocs/blocs.dart';
 
 import '../../ui/ui.dart';
-import '../../widgets/btn_follow_user_ui.dart';
+import '../../widgets/btn/btn_follow_user_ui.dart';
 import '../../widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {

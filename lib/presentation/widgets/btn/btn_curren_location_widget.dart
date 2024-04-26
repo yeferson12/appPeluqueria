@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../config/blocs/blocs.dart';
-import '../ui/ui.dart';
+import '../../../config/blocs/blocs.dart';
+import '../../ui/ui.dart';
 
 
 
