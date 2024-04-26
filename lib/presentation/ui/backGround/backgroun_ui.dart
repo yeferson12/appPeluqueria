@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../config/blocs/blocs.dart';
 import '../../views/views.dart';
 import '../../widgets/widgets.dart';
-import '../ui.dart';
 
 class BackGroud extends StatelessWidget {
   const BackGroud({super.key});
@@ -43,7 +42,7 @@ class BackGroud extends StatelessWidget {
                       right: 0,
                       left: 0,
                       child: BottonNavigatorBarWidget(
-                        icons: const [Icons.calendar_today,Icons.bubble_chart],
+                        icons: const [Icons.settings,Icons.person_pin_circle_outlined],
                         labels: const ['',''],
                         onTap: (index) {
                           switch (index) {

@@ -7,3 +7,4 @@ export 'btn/botton_navigatorbar_widget.dart';
 export 'btn/btn_float_widget.dart';
 export 'lines/lines_count_two_widget.dart';
 export 'lines/lines_count_trhee_widget.dart';
+export './header/header_widget.dart';

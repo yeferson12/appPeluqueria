@@ -7,6 +7,8 @@ import '../../../config/blocs/blocs.dart';
 import '../../views/views.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../widgets/widgets.dart';
+
 class AnimationDrawer extends StatelessWidget {
   const AnimationDrawer({
     super.key,
@@ -49,10 +51,15 @@ class AnimationDrawer extends StatelessWidget {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(60)),
                         child: Scaffold(
-                          body: MapView(
-                            initialLocation: initialLocation,
-                            polylines: polylines,
-                            markers: markers,
+                          body: Stack(
+                            children: [
+                              MapView(
+                                initialLocation: initialLocation,
+                                polylines: polylines,
+                                markers: markers,
+                              ),
+                              const HeaderWaveGradient(),
+                            ],
                           ),
                           // bottomNavigationBar:
                           //     CustomBottomNavigation(currenIndex: pageIndex),
