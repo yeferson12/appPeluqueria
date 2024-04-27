@@ -33,6 +33,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnStopFollowingUserEvent>((event, emit) => emit( state.copyWith( followUser: false ) ));
     on<DisplayPolylinesEvent>((event, emit) => emit( state.copyWith( polylines: event.polylines, markers: event.markers ) ));
     on<OnGetMarkersBarber>( (event, emit) => emit( state.copyWith( markers: event.markers )), );
+    on<OnInfoMarkerBarberEvent>((event, emit) => emit( state.copyWith( infoMarkerBarbe: true ) ));
+    on<OnCloseInfoMarkerBarberEvent>((event, emit) => emit( state.copyWith( infoMarkerBarbe: false ) ));
 
     locationStateSubscription = locationBloc.stream.listen(( locationState ) {
 
@@ -142,6 +144,9 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       markerId: MarkerId('${barber.name}_$index'),
       position: barber.location,
       icon: iconBarber,
+      onTap: () {
+        add( OnInfoMarkerBarberEvent() );
+      },
     );
     markers['${barber.name}_$index'] = marker;
   });

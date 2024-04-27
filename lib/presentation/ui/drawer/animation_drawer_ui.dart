@@ -23,13 +23,12 @@ class AnimationDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocBuilder<DrawerBloc, DrawerState>(
       builder: (context, state) {
         return Container(
-          margin: state.isTab == -1 ||state.isTab == 1 
-          ? const EdgeInsets.only(bottom: 80)
-          : const EdgeInsets.only(bottom: 80, left: 5, right: 5),
+          margin: state.isTab == -1 || state.isTab == 1
+              ? const EdgeInsets.only(bottom: 80)
+              : const EdgeInsets.only(bottom: 80, left: 5, right: 5),
           child: ClipRRect(
               borderRadius: state.isTab == 0
                   ? const BorderRadius.only(
@@ -47,23 +46,28 @@ class AnimationDrawer extends StatelessWidget {
                         ..setEntry(3, 2, 0.001)
                         ..setEntry(0, 3, 200 * val)
                         ..rotateY((pi / 5) * val),
-                      child: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(60)),
-                        child: Scaffold(
-                          body: Stack(
-                            children: [
-                              MapView(
-                                initialLocation: initialLocation,
-                                polylines: polylines,
-                                markers: markers,
+                      child: BlocBuilder<MapBloc, MapState>(
+                        builder: (context, state) {
+                          return ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(60)),
+                            child: Scaffold(
+                              body: Stack(
+                                children: [
+                                  MapView(
+                                    initialLocation: initialLocation,
+                                    polylines: polylines,
+                                    markers: markers,
+                                  ),
+                                   HeaderWaveGradient(
+                                      heightPercentage: state.infoMarkerBarbe),
+                                ],
                               ),
-                              const HeaderWaveGradient(),
-                            ],
-                          ),
-                          // bottomNavigationBar:
-                          //     CustomBottomNavigation(currenIndex: pageIndex),
-                        ),
+                              // bottomNavigationBar:
+                              //     CustomBottomNavigation(currenIndex: pageIndex),
+                            ),
+                          );
+                        },
                       ),
                     ));
                   })),
