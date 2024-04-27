@@ -28,3 +28,5 @@ class OnGetMarkersBarber extends MapEvent {
   final Map<String, Marker> markers;
   const OnGetMarkersBarber(this.markers);
 }
+
+class OnClearPolylinesEvent extends MapEvent {}

@@ -10,7 +10,6 @@ import 'package:peluquerias/config/theme/themes.dart';
 
 import '../../../infrastruture/models/models.dart';
 import '../../../presentation/services/services.dart';
-import '../../../presentation/ui/ui.dart';
 import '../../helpers/helpers.dart';
 
 part 'map_event.dart';
@@ -35,6 +34,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnGetMarkersBarber>( (event, emit) => emit( state.copyWith( markers: event.markers )), );
     on<OnInfoMarkerBarberEvent>((event, emit) => emit( state.copyWith( infoMarkerBarbe: true ) ));
     on<OnCloseInfoMarkerBarberEvent>((event, emit) => emit( state.copyWith( infoMarkerBarbe: false ) ));
+    on<OnClearPolylinesEvent>( onClearPolylinesEvent );
 
     locationStateSubscription = locationBloc.stream.listen(( locationState ) {
 
@@ -61,6 +61,10 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     _mapController?.animateCamera(cameraUpdate);
   }
 
+  void onClearPolylinesEvent(OnClearPolylinesEvent event, Emitter<MapState> emit) {
+  emit(state.copyWith(polylines: {}));
+}
+
   void _onStartFollowingUser(OnStartFollowingUserEvent event, Emitter<MapState> emit) {
 
     emit( state.copyWith( followUser: true ) );
@@ -85,32 +89,23 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     kms = (kms * 100).floorToDouble();
     kms /= 100;
 
-    int tripDuration = (destination.duration / 60).floorToDouble().toInt();
+    //* este codigo sirve para hacer markes perzonalizados
+    // int tripDuration = (destination.duration / 60).floorToDouble().toInt();
+    // final startMaker = await getMarkerPainterBitmap( StartMarkerPainter(minutes: tripDuration, destination: 'Mi ubicación') );
+    // final endMaker = await getMarkerPainterBitmap( EndMarkerPainter(kilometers: kms.toInt(), destination: destination.endPlace.properties.name) );
 
-    final startMaker = await getMarkerPainterBitmap( StartMarkerPainter(minutes: tripDuration, destination: 'Mi ubicación') );
-    final endMaker = await getMarkerPainterBitmap( EndMarkerPainter(kilometers: kms.toInt(), destination: destination.endPlace.properties.name) );
 
-    final startMarker = Marker(
-      anchor: const Offset(0.1, 1),
-      markerId: const MarkerId('start'),
-      position: destination.points.first,
-      icon: startMaker,
-      // infoWindow: InfoWindow(
-      //   title: 'Inicio',
-      //   snippet: 'Kms: $kms, duration: $tripDuration',
-      // )
-    );
+   //* este codigo es para crear los markes
+    // final startMarker = Marker(
+    //   anchor: const Offset(0.1, 1),
+    //   markerId: const MarkerId('start'),
+    //   position: destination.points.first,
+    // );
 
-    final endMarker = Marker(
-      markerId: const MarkerId('end'),
-      position: destination.points.last,
-      icon: endMaker,
-      // anchor: const Offset(0,0),
-      // infoWindow: InfoWindow(
-      //   title: destination.endPlace.properties.name,
-      //   snippet: destination.endPlace.properties.namePreferred,
-      // )
-    );
+    // final endMarker = Marker(
+    //   markerId: const MarkerId('end'),
+    //   position: destination.points.last,
+    // );
 
 
     final curretPolylines = Map<String, Polyline>.from( state.polylines );
@@ -119,8 +114,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
     final currentMarkers = Map<String, Marker>.from( state.markers );
 
-    currentMarkers['start'] = startMarker;
-    currentMarkers['end'] = endMarker;
+    // currentMarkers['start'] = startMarker;
+    // currentMarkers['end'] = endMarker;
 
 
     add( DisplayPolylinesEvent( curretPolylines, currentMarkers ) );

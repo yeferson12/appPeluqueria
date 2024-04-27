@@ -137,6 +137,8 @@ class _InfoBarberHeader extends StatelessWidget {
 
     final infoBarber = BlocProvider.of<BarberInfoBloc>(context);
     final mapBloc = BlocProvider.of<MapBloc>(context);
+    final searchBloc = BlocProvider.of<SearchBloc>(context);
+    final locationBloc = BlocProvider.of<LocationBloc>(context);
 
     return SlideInDown(
       child: Stack(
@@ -168,8 +170,16 @@ class _InfoBarberHeader extends StatelessWidget {
               children: [
                 IconButton(
                   icon: const Icon(Icons.location_on),
-                  onPressed: () {
-                    // Acción al presionar el botón de teléfono
+                  onPressed: () async {
+                    final start = locationBloc.state.lastKnownLocation;
+                    if ( start == null ) return;
+
+                    final end = mapBloc.mapCenter;
+                    if ( end == null ) return;
+
+
+                    final destination = await searchBloc.getCoorsStartToEnd(start, end);
+                    await mapBloc.drawRoutePolyline(destination);
                   },
                 ),
                 IconButton(
@@ -195,6 +205,7 @@ class _InfoBarberHeader extends StatelessWidget {
               onPressed: () {
                 infoBarber.add(OnBackInfoBarberEvent());
                 mapBloc.add(OnCloseInfoMarkerBarberEvent());
+                mapBloc.add(OnClearPolylinesEvent());
               },
             ),
           ),
