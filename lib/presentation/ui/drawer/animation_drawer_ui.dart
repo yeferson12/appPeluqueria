@@ -1,5 +1,7 @@
 import 'dart:math';
+import 'dart:ui';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -24,20 +26,21 @@ class AnimationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DrawerBloc, DrawerState>(
-      builder: (context, state) {
+      builder: (context, stateDrawer) {
         return Container(
-          margin: state.isTab == -1 || state.isTab == 1
+          margin: stateDrawer.isTab == -1 || stateDrawer.isTab == 1
               ? const EdgeInsets.only(bottom: 80)
               : const EdgeInsets.only(bottom: 80, left: 5, right: 5),
           child: ClipRRect(
-              borderRadius: state.isTab == 0
+              borderRadius: stateDrawer.isTab == 0
                   ? const BorderRadius.only(
                       bottomLeft: Radius.circular(60),
                       bottomRight: Radius.circular(60),
                     )
                   : BorderRadius.zero,
               child: TweenAnimationBuilder(
-                  tween: Tween<double>(begin: 0, end: state.isTab.toDouble()),
+                  tween: Tween<double>(
+                      begin: 0, end: stateDrawer.isTab.toDouble()),
                   duration: const Duration(milliseconds: 500),
                   builder: (_, double val, __) {
                     return (Transform(
@@ -59,10 +62,15 @@ class AnimationDrawer extends StatelessWidget {
                                     polylines: polylines,
                                     markers: markers,
                                   ),
-                                   HeaderWaveGradient(
-                                      heightPercentage: state.infoMarkerBarbe),
+                                  const _InfobarberBody(),
+                                  HeaderWaveGradient(
+                                    heightPercentage: state.infoMarkerBarbe,
+                                  ),
+                                  if (state.infoMarkerBarbe)
+                                    const _InfoBarberHeader()
                                 ],
                               ),
+
                               // bottomNavigationBar:
                               //     CustomBottomNavigation(currenIndex: pageIndex),
                             ),
@@ -73,6 +81,135 @@ class AnimationDrawer extends StatelessWidget {
                   })),
         );
       },
+    );
+  }
+}
+
+class _InfobarberBody extends StatelessWidget {
+  const _InfobarberBody({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<BarberInfoBloc, BarberInfoState>(
+      builder: (context, stateInfoBarber) {
+        return stateInfoBarber.infoBarber 
+        ? BounceInDown(
+          child: Stack(
+            children: [
+              SizedBox(
+                width: double.infinity,
+                height: double.infinity,
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: Container(
+                    color: Colors.black.withOpacity(0.1), // Fondo transparente
+                  ),
+                ),
+              ),
+              const Center(
+                child: Text(
+                  'Contenido aquí',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+        : Container();
+      },
+    );
+  }
+}
+
+class _InfoBarberHeader extends StatelessWidget {
+  const _InfoBarberHeader({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    final infoBarber = BlocProvider.of<BarberInfoBloc>(context);
+    final mapBloc = BlocProvider.of<MapBloc>(context);
+
+    return SlideInDown(
+      child: Stack(
+        children: [
+          const Positioned(
+            top: 50,
+            left: 20,
+            child: CircleAvatar(
+              radius: 30,
+              backgroundImage: AssetImage('ruta_de_la_imagen.jpg'),
+            ),
+          ),
+          const Positioned(
+            top: 60,
+            left: 90,
+            child: Text(
+              'Nombre del Barbero',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 100,
+            left: 90,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.location_on),
+                  onPressed: () {
+                    // Acción al presionar el botón de teléfono
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.message),
+                  onPressed: () {
+                    // Acción al presionar el botón de ubicación
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.info_outline),
+                  onPressed: () {
+                    infoBarber.add(OnInfoBarberEvent());
+                  },
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            top: 30,
+            right: 20,
+            child: IconButton(
+              icon: const Icon(Icons.cancel_outlined),
+              onPressed: () {
+                infoBarber.add(OnBackInfoBarberEvent());
+                mapBloc.add(OnCloseInfoMarkerBarberEvent());
+              },
+            ),
+          ),
+          // Positioned(
+          //   top: 170,
+          //   left: 175,
+          //   child: IconButton(
+          //     icon: const Icon(Icons.cancel_outlined, size: 30,),
+          //     onPressed: () {
+          //       // Acción al presionar el botón de flecha hacia arriba
+          //     },
+          //   ),
+          // ),
+        ],
+      ),
     );
   }
 }
