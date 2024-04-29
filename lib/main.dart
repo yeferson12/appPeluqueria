@@ -13,7 +13,7 @@ void main() {
         BlocProvider(create: (context) => MapBloc(locationBloc: BlocProvider.of<LocationBloc>(context)) ),
         BlocProvider(create: (context) => SearchBloc( walkinService: WalkingService(), searchPlacesService: SearchPlacesService()) ),
         BlocProvider(create: (context) => DrawerBloc() ),
-        BlocProvider(create: (context) => BarberInfoBloc() ),
+        BlocProvider(create: (context) => BarberInfoBloc(mapBloc: BlocProvider.of<MapBloc>(context)) ),
       ],
       child: const MyApp(),
     )

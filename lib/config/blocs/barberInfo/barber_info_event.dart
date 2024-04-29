@@ -9,3 +9,8 @@ sealed class BarberInfoEvent extends Equatable {
 
 class OnInfoBarberEvent extends BarberInfoEvent {}
 class OnBackInfoBarberEvent extends BarberInfoEvent {}
+
+class OnGetInfoBarberEvent extends BarberInfoEvent {
+  final List<ReviewsModal> review;
+  const OnGetInfoBarberEvent(this.review);
+}

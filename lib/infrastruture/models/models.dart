@@ -5,3 +5,4 @@ export './walking_response_model.dart';
 export 'package:peluquerias/infrastruture/models/search_result_model.dart';
 export './router_end_marker_model.dart';
 export './barber_model.dart';
+export './info_employes_model.dart';

@@ -29,4 +29,9 @@ class OnGetMarkersBarber extends MapEvent {
   const OnGetMarkersBarber(this.markers);
 }
 
+class OnGetInfoBarber extends MapEvent {
+  final List<ReviewsModal> review;
+  const OnGetInfoBarber(this.review);
+}
+
 class OnClearPolylinesEvent extends MapEvent {}

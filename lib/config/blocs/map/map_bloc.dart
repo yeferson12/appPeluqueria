@@ -35,6 +35,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnInfoMarkerBarberEvent>((event, emit) => emit( state.copyWith( infoMarkerBarbe: true ) ));
     on<OnCloseInfoMarkerBarberEvent>((event, emit) => emit( state.copyWith( infoMarkerBarbe: false ) ));
     on<OnClearPolylinesEvent>( onClearPolylinesEvent );
+    on<OnGetInfoBarber>(  (event, emit) => emit( state.copyWith( reviews: event.review )) );
 
     locationStateSubscription = locationBloc.stream.listen(( locationState ) {
 
@@ -131,21 +132,35 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
     final barbers = await barberService.getLocationBarberService();
     final markers = <String, Marker>{};
+    final List<ReviewsModal> review = [];
 
     final iconBarber = await getAssetImageMarker( img: 'assets/barber1.png', size: 5 );
 
       barbers.asMap().forEach((index, barber) {
+
+        
+
     final marker = Marker(
       markerId: MarkerId('${barber.name}_$index'),
       position: barber.location,
       icon: iconBarber,
       onTap: () {
+        review.clear();
         add( OnInfoMarkerBarberEvent() );
+
+        for (var itemReview in barber.review) {
+
+        if (itemReview.idBarber ==  barber.id) {
+      review.add(itemReview);  
+     }
+     }
       },
     );
+
     markers['${barber.name}_$index'] = marker;
   });
 
+  add(OnGetInfoBarber(review));
   add(OnGetMarkersBarber(markers));
 
   }

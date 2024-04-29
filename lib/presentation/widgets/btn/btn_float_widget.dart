@@ -27,7 +27,7 @@ class BtnFloatWidget extends StatelessWidget {
                     size: 30.0,
                   ),
                   onPressed: () {
-                    mapBloc.add(OnCloseInfoMarkerBarberEvent());
+                    // mapBloc.add(OnCloseInfoMarkerBarberEvent());
                     mapDrawer.add(OnMapTabEvent());
                   })),
         );
