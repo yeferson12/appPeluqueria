@@ -6,6 +6,7 @@ class BarberResponse {
   final String name;
   final LatLng location;
   final List<ReviewsModal>? review;
+  final List<ImgsBarber> imgBarber;
 
   BarberResponse(  {
     required this.id, 
@@ -13,6 +14,7 @@ class BarberResponse {
     required this.name, 
     required this.location, 
     this.review,
+    required this.imgBarber,
     });
 }
 
@@ -30,5 +32,13 @@ class ReviewsModal {
     required this.comentario,
     required this.estrellas,
     required this.date,
+  });
+}
+
+class ImgsBarber {
+  final String imgBarber;
+
+  ImgsBarber({
+    required this.imgBarber,
   });
 }

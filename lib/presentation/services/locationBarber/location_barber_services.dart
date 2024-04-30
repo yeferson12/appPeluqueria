@@ -34,6 +34,13 @@ class LocationBarberservices {
           date: 'Hace 1 mes'
         ),
       ],
+      imgBarber: [
+        ImgsBarber(imgBarber: 'assets/img/foto1.jpg'),
+        ImgsBarber(imgBarber: 'assets/img/foto2.jpg'),
+        ImgsBarber(imgBarber: 'assets/img/foto3.jpg'),
+        ImgsBarber(imgBarber: 'assets/img/foto4.jpg'),
+        ImgsBarber(imgBarber: 'assets/img/foto5.jpg'),
+      ]
     ),
     BarberResponse(
       id: 2,
@@ -49,6 +56,10 @@ class LocationBarberservices {
           date: 'Hace 1 mes'
         ),
       ],
+      imgBarber: [
+        ImgsBarber(imgBarber: 'assets/img/foto1.jpg'),
+        ImgsBarber(imgBarber: 'assets/img/foto2.jpg'),
+      ]
     ),
   ];
   return barbers;

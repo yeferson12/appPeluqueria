@@ -49,6 +49,6 @@ class MapState extends Equatable {
     markers, 
     infoMarkerBarbe, 
     infoByBarber, 
-    selectedBarber ?? BarberResponse(id: 0, img: '',name: '',location: LatLng(40.43455, -34.345345))
+    selectedBarber ?? BarberResponse(id: 0, img: '',name: '',location: LatLng(40.43455, -34.345345), imgBarber: [])
     ];
 }

@@ -9,7 +9,6 @@ class BtnFloatWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mapDrawer = BlocProvider.of<DrawerBloc>(context);
-    final mapBloc = BlocProvider.of<MapBloc>(context);
 
     return BlocBuilder<DrawerBloc, DrawerState>(
       builder: (context, state) {

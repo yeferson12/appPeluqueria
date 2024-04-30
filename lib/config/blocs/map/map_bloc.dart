@@ -164,6 +164,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
           name: barber.name,
           location: barber.location,
           review: review,
+          imgBarber: barber.imgBarber
          );
          add(OnSelectBarberEvent(barberResponse));
       },

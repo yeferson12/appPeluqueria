@@ -24,6 +24,6 @@ part of 'barber_info_bloc.dart';
   );
   
   @override
-  List<Object> get props => [infoBarber, infoByBarber, selectedBarber ?? BarberResponse(id: 0, img: '',name: '',location: LatLng(40.43455, -34.345345))];
+  List<Object> get props => [infoBarber, infoByBarber, selectedBarber ?? BarberResponse(id: 0, img: '',name: '',location: LatLng(40.43455, -34.345345), imgBarber: [])];
 }
 
