@@ -6,7 +6,8 @@ class MapState extends Equatable {
   final bool infoMarkerBarbe;
   final Map<String, Polyline> polylines;
   final Map<String, Marker> markers;
-  final List<ReviewsModal> reviews;
+  final List<BarberResponse> infoByBarber;
+  final BarberResponse? selectedBarber;
 
   const MapState({
     this.isMapInitialized = false, 
@@ -14,10 +15,11 @@ class MapState extends Equatable {
     this.infoMarkerBarbe = false,
     Map<String, Polyline>? polylines,
     Map<String, Marker>? markers,
-    List< ReviewsModal >? reviews
+    List<BarberResponse>? infoByBarber,
+    this.selectedBarber
   }): polylines = polylines ?? const {},
       markers = markers ?? const {},
-      reviews = reviews ?? const [];
+      infoByBarber = infoByBarber ?? const [];
 
 
   MapState copyWith({
@@ -26,7 +28,8 @@ class MapState extends Equatable {
     bool? infoMarkerBarbe,
     Map<String, Polyline>? polylines,
     Map<String, Marker>? markers,
-    List< ReviewsModal >? reviews
+    BarberResponse? selectedBarber,
+    List<BarberResponse>? infoByBarber,
   }) 
   => MapState(
     isMapInitialized: isMapInitialized ?? this.isMapInitialized,
@@ -34,9 +37,18 @@ class MapState extends Equatable {
     polylines: polylines ?? this.polylines,
     markers: markers ?? this.markers,
     infoMarkerBarbe: infoMarkerBarbe ?? this.infoMarkerBarbe,
-    reviews: reviews ?? this.reviews,
+    infoByBarber: infoByBarber ?? this.infoByBarber,
+    selectedBarber: selectedBarber ?? this.selectedBarber,
   );
 
   @override
-  List<Object> get props => [ isMapInitialized, followUser, polylines, markers, infoMarkerBarbe, reviews];
+  List<Object> get props => [ 
+    isMapInitialized, 
+    followUser, 
+    polylines, 
+    markers, 
+    infoMarkerBarbe, 
+    infoByBarber, 
+    selectedBarber ?? BarberResponse(id: 0, img: '',name: '',location: LatLng(40.43455, -34.345345))
+    ];
 }

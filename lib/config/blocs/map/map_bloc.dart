@@ -35,7 +35,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnInfoMarkerBarberEvent>((event, emit) => emit( state.copyWith( infoMarkerBarbe: true ) ));
     on<OnCloseInfoMarkerBarberEvent>((event, emit) => emit( state.copyWith( infoMarkerBarbe: false ) ));
     on<OnClearPolylinesEvent>( onClearPolylinesEvent );
-    on<OnGetInfoBarber>(  (event, emit) => emit( state.copyWith( reviews: event.review )) );
+    on<OnGetInfoBarber>(  (event, emit) => emit( state.copyWith( infoByBarber: event.infoByBarber )) );
+    on<OnSelectBarberEvent>(  (event, emit) => emit( state.copyWith( selectedBarber: event.barber )) );
 
     locationStateSubscription = locationBloc.stream.listen(( locationState ) {
 
@@ -138,29 +139,40 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
       barbers.asMap().forEach((index, barber) {
 
-        
-
     final marker = Marker(
       markerId: MarkerId('${barber.name}_$index'),
       position: barber.location,
       icon: iconBarber,
       onTap: () {
+        
         review.clear();
         add( OnInfoMarkerBarberEvent() );
 
-        for (var itemReview in barber.review) {
+        if( barber.review != null) {
+          for (var itemReview in barber.review!) {
 
-        if (itemReview.idBarber ==  barber.id) {
-      review.add(itemReview);  
-     }
-     }
+              if (itemReview.idBarber ==  barber.id) {
+                review.add(itemReview);  
+          }
+          }
+        }
+
+        
+        final  barberResponse = BarberResponse(
+          id: barber.id,
+          img: barber.img,
+          name: barber.name,
+          location: barber.location,
+          review: review,
+         );
+         add(OnSelectBarberEvent(barberResponse));
       },
     );
 
     markers['${barber.name}_$index'] = marker;
   });
 
-  add(OnGetInfoBarber(review));
+  
   add(OnGetMarkersBarber(markers));
 
   }

@@ -15,8 +15,9 @@ class LocationBarberservices {
   final List<BarberResponse> barbers = [
     BarberResponse(
       id: 1,
+      img: 'assets/barber1.png',
       name: 'Barbería 1',
-      location: LatLng(40.461577, -3.478715), // Ejemplo de ubicación en Nueva York
+      location: const LatLng(40.461577, -3.478715), // Ejemplo de ubicación en Nueva York
       review: [
         ReviewsModal(
           idBarber: 1,
@@ -36,8 +37,9 @@ class LocationBarberservices {
     ),
     BarberResponse(
       id: 2,
+      img: 'assets/barber1.png',
       name: 'Barbería 2',
-      location: LatLng(40.464044, -3.472113), // Ejemplo de ubicación en Los Ángeles
+      location: const LatLng(40.464044, -3.472113), // Ejemplo de ubicación en Los Ángeles
       review: [
         ReviewsModal(
           idBarber: 2,

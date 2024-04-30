@@ -409,21 +409,19 @@ void _showCustomModalReviews(BuildContext context) {
               _reviewRow('Empleados', 3),
               const Divider(),
               const Text(
-                      'Comentarios',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                'Comentarios',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               BlocBuilder<BarberInfoBloc, BarberInfoState>(
                 builder: (context, state) {
                   return Expanded(
                     child: ListView.builder(
-                      itemCount: state.reviews.length,
+                      itemCount: state.selectedBarber!.review!.length,
                       itemBuilder: (context, index) {
-                        // Aquí debes obtener el comentario, el nombre del usuario y la fecha
-                        // Puedes hacerlo desde la lista `comentarios` que contiene la información
-                        return _buildComentarioWidget( state.reviews[index] );
+                        return _buildComentarioWidget(state.selectedBarber!.review!, index);
                       },
                     ),
                   );
@@ -437,20 +435,20 @@ void _showCustomModalReviews(BuildContext context) {
   );
 }
 
-Widget _buildComentarioWidget( ReviewsModal reviews) {
+Widget _buildComentarioWidget(List<ReviewsModal> reviews, int index) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-       Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: List.generate(5, (index) {
-                  return const Icon(Icons.star, size: 36, color: Colors.yellow);
-                }),
-              ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: List.generate(5, (i) {
+          return const Icon(Icons.star, size: 36, color: Colors.yellow);
+        }),
+      ),
       const SizedBox(height: 8),
       // Texto del comentario
       Text(
-        reviews.comentario,
+        reviews[index].comentario,
         style: const TextStyle(fontSize: 16),
       ),
       const SizedBox(height: 4),
@@ -458,12 +456,12 @@ Widget _buildComentarioWidget( ReviewsModal reviews) {
       Row(
         children: [
           Text(
-            reviews.nombre,
+            reviews[index].nombre,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           const SizedBox(width: 8),
           Text(
-            'Publicado hace ${reviews.date}',
+            'Publicado hace ${reviews[index].date}',
             style: const TextStyle(color: Colors.grey),
           ),
         ],
@@ -528,87 +526,91 @@ class _InfoBarberHeader extends StatelessWidget {
     final locationBloc = BlocProvider.of<LocationBloc>(context);
 
     return SlideInDown(
-      child: Stack(
-        children: [
-          const Positioned(
-            top: 50,
-            left: 20,
-            child: CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage('assets/barber1.png'),
-            ),
-          ),
-          const Positioned(
-            top: 60,
-            left: 90,
-            child: Text(
-              'Nombre del Barbero',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+      child: BlocBuilder<BarberInfoBloc, BarberInfoState>(
+        builder: (context, stateBarberInfo) {
+          return Stack(
+            children: [
+               Positioned(
+                top: 50,
+                left: 20,
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundImage: AssetImage(stateBarberInfo.selectedBarber!.img),
+                ),
               ),
-            ),
-          ),
-          Positioned(
-            top: 100,
-            left: 90,
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.location_on),
-                  onPressed: () async {
+               Positioned(
+                top: 60,
+                left: 90,
+                child: Text(
+                  stateBarberInfo.selectedBarber!.name,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 100,
+                left: 90,
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.location_on),
+                      onPressed: () async {
+                        infoBarber.add(OnBackInfoBarberEvent());
+
+                        final start = locationBloc.state.lastKnownLocation;
+                        if (start == null) return;
+
+                        final end = mapBloc.mapCenter;
+                        if (end == null) return;
+
+                        final destination =
+                            await searchBloc.getCoorsStartToEnd(start, end);
+                        await mapBloc.drawRoutePolyline(destination);
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.message),
+                      onPressed: () {
+                        // Acción al presionar el botón de ubicación
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.info_outline),
+                      onPressed: () {
+                        infoBarber.add(OnInfoBarberEvent());
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                top: 30,
+                right: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.cancel_outlined),
+                  onPressed: () {
                     infoBarber.add(OnBackInfoBarberEvent());
-
-                    final start = locationBloc.state.lastKnownLocation;
-                    if (start == null) return;
-
-                    final end = mapBloc.mapCenter;
-                    if (end == null) return;
-
-                    final destination =
-                        await searchBloc.getCoorsStartToEnd(start, end);
-                    await mapBloc.drawRoutePolyline(destination);
+                    mapBloc.add(OnCloseInfoMarkerBarberEvent());
+                    mapBloc.add(OnClearPolylinesEvent());
                   },
                 ),
-                IconButton(
-                  icon: const Icon(Icons.message),
-                  onPressed: () {
-                    // Acción al presionar el botón de ubicación
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.info_outline),
-                  onPressed: () {
-                    infoBarber.add(OnInfoBarberEvent());
-                  },
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            top: 30,
-            right: 20,
-            child: IconButton(
-              icon: const Icon(Icons.cancel_outlined),
-              onPressed: () {
-                infoBarber.add(OnBackInfoBarberEvent());
-                mapBloc.add(OnCloseInfoMarkerBarberEvent());
-                mapBloc.add(OnClearPolylinesEvent());
-              },
-            ),
-          ),
-          // Positioned(
-          //   top: 170,
-          //   left: 175,
-          //   child: IconButton(
-          //     icon: const Icon(Icons.cancel_outlined, size: 30,),
-          //     onPressed: () {
-          //       // Acción al presionar el botón de flecha hacia arriba
-          //     },
-          //   ),
-          // ),
-        ],
+              ),
+              // Positioned(
+              //   top: 170,
+              //   left: 175,
+              //   child: IconButton(
+              //     icon: const Icon(Icons.cancel_outlined, size: 30,),
+              //     onPressed: () {
+              //       // Acción al presionar el botón de flecha hacia arriba
+              //     },
+              //   ),
+              // ),
+            ],
+          );
+        },
       ),
     );
   }

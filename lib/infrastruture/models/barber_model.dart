@@ -2,15 +2,17 @@ import 'package:google_maps_flutter/google_maps_flutter.dart' show LatLng;
 
 class BarberResponse {
   final int id;
+  final String img;
   final String name;
   final LatLng location;
-  final List<ReviewsModal> review;
+  final List<ReviewsModal>? review;
 
   BarberResponse(  {
     required this.id, 
+    required this.img, 
     required this.name, 
     required this.location, 
-    required this.review,
+    this.review,
     });
 }
 
