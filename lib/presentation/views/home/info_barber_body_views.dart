@@ -46,14 +46,14 @@ class InfobarberBody extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(height: size.height * 0.28),
+                            SizedBox(height: size.height * 0.26),
                             Container(
                               width: size.width * 0.8,
                               height: size.height * 0.20,
                               padding: const EdgeInsets.all(20),
                               margin: const EdgeInsets.only(bottom: 10),
                               decoration: BoxDecoration(
-                                color: Colors.purple.withOpacity(0.5),
+                                // color: Colors.purple.withOpacity(0.5),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child:  const Column(
@@ -81,7 +81,7 @@ class InfobarberBody extends StatelessWidget {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 16),
                             ),
-                            _ListEmployes(listAvatar: svgList),
+                            // _ListEmployes(listAvatar: svgList),
                             ImgSlideShow(imgBarber: stateInfoBarber.selectedBarber!.imgBarber)
                           ],
                         ),
@@ -117,14 +117,14 @@ class _InfoStoreInitial extends StatelessWidget {
       height: size.height * 0.028,
       child: Row(
         children: [
-          Icon(icon, color: Colors.white),
+          Icon(icon, color: Colors.black),
           const SizedBox(width: 10),
           Text(
             text,
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
           Expanded(child: Container()),
@@ -134,11 +134,11 @@ class _InfoStoreInitial extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 )
               : GestureDetector(
-                  child: Icon(iconModal, color: Colors.white),
+                  child: Icon(iconModal, color: Colors.black),
                   onTap: () {
                     _showCustomModal(context, size);
                   })
@@ -172,7 +172,7 @@ class _ListEmployes extends StatelessWidget {
                     angle: 90 * 3.1415927 / 180,
                     child: SvgPicture.asset(
                       'assets/svg/cuchilla.svg',
-                      width: size.height * 0.2,
+                      width: size.width * 0.2,
                       height: size.height * 0.15,
                     ),
                   ),
@@ -183,12 +183,12 @@ class _ListEmployes extends StatelessWidget {
                       child: Container(
                         width: size.height * 0.08,
                         height: size.height * 0.08,
-                        color: Colors.white,
-                        child: SvgPicture.asset(
-                          listAvatar[index].svgPath,
-                          width: size.height * 0.2,
-                          height: size.height * 0.15,
-                        ),
+                        child:  Image.asset('assets/cuchilla_barber.png')
+                        // SvgPicture.asset(
+                        //   listAvatar[index].svgPath,
+                        //   width: size.height * 0.2,
+                        //   height: size.height * 0.15,
+                        // ),
                       ),
                     ),
                   ),
@@ -255,7 +255,7 @@ class _Reviews extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
           ),
@@ -405,14 +405,14 @@ Widget _reviewRow(String label, int stars) {
       children: [
         Text(
           label,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         Row(
           children: List.generate(5, (index) {
             if (index < stars) {
-              return Icon(Icons.star, color: Colors.yellow);
+              return const Icon(Icons.star, color: Colors.yellow);
             } else {
-              return Icon(Icons.star_border, color: Colors.grey);
+              return const Icon(Icons.star_border, color: Colors.grey);
             }
           }),
         ),

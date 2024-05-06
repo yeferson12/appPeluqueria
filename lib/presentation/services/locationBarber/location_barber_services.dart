@@ -35,11 +35,11 @@ class LocationBarberservices {
         ),
       ],
       imgBarber: [
-        ImgsBarber(imgBarber: 'assets/img/foto1.jpg'),
-        ImgsBarber(imgBarber: 'assets/img/foto2.jpg'),
-        ImgsBarber(imgBarber: 'assets/img/foto3.jpg'),
-        ImgsBarber(imgBarber: 'assets/img/foto4.jpg'),
-        ImgsBarber(imgBarber: 'assets/img/foto5.jpg'),
+        ImgsBarber(imgBarber: 'assets/svg/avatar7.svg'),
+        ImgsBarber(imgBarber: 'assets/svg/avatar6.svg'),
+        ImgsBarber(imgBarber: 'assets/svg/avatar5.svg'),
+        ImgsBarber(imgBarber: 'assets/svg/avatar4.svg'),
+        ImgsBarber(imgBarber: 'assets/svg/avatar3.svg'),
       ]
     ),
     BarberResponse(
@@ -57,8 +57,8 @@ class LocationBarberservices {
         ),
       ],
       imgBarber: [
-        ImgsBarber(imgBarber: 'assets/img/foto1.jpg'),
-        ImgsBarber(imgBarber: 'assets/img/foto2.jpg'),
+        ImgsBarber(imgBarber: 'assets/svg/avatar1.svg'),
+        ImgsBarber(imgBarber: 'assets/svg/avatar2.svg'),
       ]
     ),
   ];
