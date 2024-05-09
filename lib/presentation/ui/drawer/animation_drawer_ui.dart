@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../config/blocs/blocs.dart';
@@ -131,11 +132,11 @@ class _InfoBarberHeader extends StatelessWidget {
               ),
               Positioned(
                 top: 100,
-                left: 90,
+                left: 75,
                 child: Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.location_on),
+                      icon: const Icon(Icons.location_on, color: Colors.white,),
                       onPressed: () async {
                         infoBarber.add(OnBackInfoBarberEvent());
 
@@ -151,30 +152,18 @@ class _InfoBarberHeader extends StatelessWidget {
                       },
                     ),
                     IconButton(
-                      icon: const Icon(Icons.message),
+                      icon: const Icon(Icons.message, color: Colors.white,),
                       onPressed: () {
-                        // Acción al presionar el botón de ubicación
+                        GoRouter.of(context).go('/chat-screen');
                       },
                     ),
                     IconButton(
-                      icon: const Icon(Icons.info_outline),
+                      icon: const Icon(Icons.info_outline, color: Colors.white,),
                       onPressed: () {
                         infoBarber.add(OnInfoBarberEvent());
                       },
                     ),
                   ],
-                ),
-              ),
-              Positioned(
-                top: 30,
-                right: 20,
-                child: IconButton(
-                  icon: const Icon(Icons.cancel_outlined),
-                  onPressed: () {
-                    infoBarber.add(OnBackInfoBarberEvent());
-                    mapBloc.add(OnCloseInfoMarkerBarberEvent());
-                    mapBloc.add(OnClearPolylinesEvent());
-                  },
                 ),
               ),
               // Positioned(

@@ -49,9 +49,9 @@ class _HeaderWaveGradientPainterInitial extends CustomPainter {
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: <Color>[
-        Color.fromARGB(255, 113, 1, 158),
-        Color.fromARGB(255, 113, 1, 158),
-        Color.fromARGB(255, 113, 1, 158),
+        Color.fromARGB(255, 32, 32, 32),
+        Color.fromARGB(255, 32, 32, 32),
+        Color.fromARGB(255, 32, 32, 32),
       ],
       stops: [
         0.2,
@@ -110,9 +110,9 @@ class _HeaderWaveGradientPainterInitial extends CustomPainter {
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: <Color>[
-        Color.fromARGB(255, 113, 1, 158),
-        Color.fromARGB(255, 113, 1, 158),
-        Color.fromARGB(255, 113, 1, 158),
+        Color.fromARGB(255, 32, 32, 32),
+        Color.fromARGB(255, 32, 32, 32),
+        Color.fromARGB(255, 32, 32, 32),
       ],
       stops: [
         0.2,

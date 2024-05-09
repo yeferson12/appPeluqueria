@@ -148,67 +148,6 @@ class _InfoStoreInitial extends StatelessWidget {
   }
 }
 
-class _ListEmployes extends StatelessWidget {
-  final List<InfoEmployesModel> listAvatar;
-
-  const _ListEmployes({
-    super.key,
-    required this.listAvatar,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
-    return SizedBox(
-        height: size.height * 0.15,
-        child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: listAvatar.length,
-            itemBuilder: (context, index) {
-              return Stack(
-                children: [
-                  Transform.rotate(
-                    angle: 90 * 3.1415927 / 180,
-                    child: SvgPicture.asset(
-                      'assets/svg/cuchilla.svg',
-                      width: size.width * 0.2,
-                      height: size.height * 0.15,
-                    ),
-                  ),
-                  Positioned(
-                    left: 30,
-                    top: 33,
-                    child: ClipOval(
-                      child: Container(
-                        width: size.height * 0.08,
-                        height: size.height * 0.08,
-                        child:  Image.asset('assets/cuchilla_barber.png')
-                        // SvgPicture.asset(
-                        //   listAvatar[index].svgPath,
-                        //   width: size.height * 0.2,
-                        //   height: size.height * 0.15,
-                        // ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 30,
-                    top: 33,
-                    child: CircleRedGreenWidget(
-                        isActivite: listAvatar[index].isActive),
-                  ),
-                  Positioned(
-                    left: 42,
-                    top: 110,
-                    child: Text(listAvatar[index].nameBarber),
-                  ),
-                ],
-              );
-            }));
-  }
-}
-
 final List<InfoEmployesModel> svgList = [
   InfoEmployesModel(
       nameBarber: 'Yeferson',

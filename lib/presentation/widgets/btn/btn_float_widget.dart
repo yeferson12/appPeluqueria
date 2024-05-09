@@ -9,26 +9,82 @@ class BtnFloatWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mapDrawer = BlocProvider.of<DrawerBloc>(context);
+    final mapBloc = BlocProvider.of<MapBloc>(context);
+    final infoBarber = BlocProvider.of<BarberInfoBloc>(context);
 
     return BlocBuilder<DrawerBloc, DrawerState>(
-      builder: (context, state) {
+      builder: (context, stateDrawer) {
         return Container(
           margin: const EdgeInsets.only(bottom: 20),
           child: CircleAvatar(
-              backgroundColor: state.isTab != 0
+              backgroundColor: stateDrawer.isTab != 0
                   ? Colors.transparent
-                  : const Color.fromARGB(255, 113, 1, 158),
+                  : const Color(0xff0088E0),
               maxRadius: 50,
-              child: IconButton(
-                  icon: Icon(
-                    Icons.add,
-                    color: state.isTab == 0 ? Colors.white : Colors.grey,
-                    size: 30.0,
-                  ),
-                  onPressed: () {
-                    // mapBloc.add(OnCloseInfoMarkerBarberEvent());
-                    mapDrawer.add(OnMapTabEvent());
-                  })),
+              child: BlocBuilder<MapBloc, MapState>(
+                builder: (context, stateMap) {
+
+                   if( stateDrawer.isTab == 1) {
+
+                    return IconButton(
+                      icon: const Icon(
+                        Icons.arrow_forward_ios_outlined,
+                        color: Colors.white,
+                        size: 30.0,
+                      ),
+                      onPressed: () {
+                        // mapBloc.add(OnCloseInfoMarkerBarberEvent());
+                        mapDrawer.add(OnMapTabEvent());
+                      });
+                    
+                  }  else if( stateDrawer.isTab == -1 &&  !stateMap.infoMarkerBarbe ) {
+
+                    return IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new_outlined,
+                        color: Colors.white,
+                        size: 30.0,
+                      ),
+                      onPressed: () {
+                        // mapBloc.add(OnCloseInfoMarkerBarberEvent());
+                        mapDrawer.add(OnMapTabEvent());
+                      });
+
+                  }
+
+                  else if (stateMap.infoMarkerBarbe) {
+
+                    return IconButton(
+                      icon: const Icon(
+                        Icons.close_outlined,
+                        color: Colors.white,
+                        size: 30.0,
+                      ),
+                      onPressed: () {
+                        // mapBloc.add(OnCloseInfoMarkerBarberEvent());
+                        infoBarber.add(OnBackInfoBarberEvent());
+                        mapBloc.add(OnCloseInfoMarkerBarberEvent());
+                        mapBloc.add(OnClearPolylinesEvent());
+                      });
+                    
+                  }else{
+
+                    return IconButton(
+                      icon: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                        size: 30.0,
+                      ),
+                      onPressed: () {
+                        // mapBloc.add(OnCloseInfoMarkerBarberEvent());
+                        mapDrawer.add(OnMapTabEvent());
+                      });
+
+
+                  } 
+                  
+                },
+              )),
         );
       },
     );

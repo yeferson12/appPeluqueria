@@ -22,13 +22,15 @@ class BackGroud extends StatelessWidget {
                     Container(
                       decoration: const BoxDecoration(
                           gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
                               colors: [
-                            Color.fromARGB(255, 84, 55, 107),
-                            Color.fromARGB(255, 61, 0, 108),
-                            Color.fromARGB(255, 113, 1, 158),
-                            Color.fromARGB(255, 113, 1, 158),
+                            Color(0xffE24C3B),
+                            Color(0xffE24C3B),
+                            Color(0xffFBF3EF),
+                            Color(0xffFBF3EF),
+                            Color(0xff0088E0),
+                            Color(0xff0088E0),
                           ])),
                     ),
         

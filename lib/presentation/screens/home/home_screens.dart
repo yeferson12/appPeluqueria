@@ -47,19 +47,19 @@ class _HomeScreenState extends State<HomeScreen> {
           return BlocBuilder<MapBloc, MapState>(
             builder: (context, mapState) {
               return   Stack(
-                  children: [
-                    const BackGroud(),
-                    AnimationDrawer(
-                      initialLocation: state.lastKnownLocation!,
-                      polylines: mapState.polylines.values.toSet(),
-                      markers: mapState.markers.values.toSet(),
-                      ),
-                    
-                    // const SearchBarWidget(),
-                    // const ManualMarker(),
-                    
-                  ],
-                );
+                    children: [
+                      const BackGroud(),
+                      AnimationDrawer(
+                        initialLocation: state.lastKnownLocation!,
+                        polylines: mapState.polylines.values.toSet(),
+                        markers: mapState.markers.values.toSet(),
+                        ),
+                      
+                      // const SearchBarWidget(),
+                      // const ManualMarker(),
+                      
+                    ],
+              );
             },
           );
         },
