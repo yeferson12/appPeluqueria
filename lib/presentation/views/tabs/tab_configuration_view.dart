@@ -2,6 +2,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
+import '../../../config/theme/themes.dart';
 import '../../widgets/widgets.dart';
 
 class TabConfigurationView extends StatelessWidget {
@@ -63,10 +64,10 @@ class _IconConfiguration extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: const Icon(Icons.settings_outlined,
             size: 140,
-            color: Colors.white,
+            color: colorBlack,
             shadows: <BoxShadow>[
               BoxShadow(
-                  color: Colors.white,
+                  color: colorBlack,
                   blurRadius: 6,
                   spreadRadius: -2,
                   blurStyle: BlurStyle.outer)
@@ -139,20 +140,20 @@ class _BoxInfoDrawer extends StatelessWidget {
               color: Colors.transparent,
               boxShadow: const <BoxShadow>[
                 BoxShadow(
-                    color: Colors.white,
+                    color: colorBlack,
                     blurRadius: 6,
                     spreadRadius: -2,
                     blurStyle: BlurStyle.outer)
               ],
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
-                color: Colors.white,
+                color: colorBlack,
                 width: 1,
               )),
           padding: const EdgeInsets.all(8.0),
           child: Text(
             tuLista[index],
-            style: const TextStyle(color: Colors.white),
+            style: const TextStyle(color: colorBlack),
           )),
     );
   }

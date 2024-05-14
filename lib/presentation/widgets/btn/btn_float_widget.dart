@@ -37,7 +37,7 @@ class BtnFloatWidget extends StatelessWidget {
                         mapDrawer.add(OnMapTabEvent());
                       });
                     
-                  }  else if( stateDrawer.isTab == -1 &&  !stateMap.infoMarkerBarbe ) {
+                  }  else if( stateDrawer.isTab == -1  ) {
 
                     return IconButton(
                       icon: const Icon(
@@ -61,7 +61,6 @@ class BtnFloatWidget extends StatelessWidget {
                         size: 30.0,
                       ),
                       onPressed: () {
-                        // mapBloc.add(OnCloseInfoMarkerBarberEvent());
                         infoBarber.add(OnBackInfoBarberEvent());
                         mapBloc.add(OnCloseInfoMarkerBarberEvent());
                         mapBloc.add(OnClearPolylinesEvent());

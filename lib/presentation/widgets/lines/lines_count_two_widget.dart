@@ -1,6 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
+import '../../../config/theme/themes.dart';
+
 class LineasCountTwoWidget extends StatelessWidget {
   final double width;
   final double height;
@@ -26,11 +28,11 @@ class LineasCountTwoWidget extends StatelessWidget {
           child: Container(
             width: width,
             height: 2,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              boxShadow: const <BoxShadow>[
+            decoration: const BoxDecoration(
+              color: colorBlack,
+              boxShadow: <BoxShadow>[
                 BoxShadow(
-                  color: Colors.white,
+                  color: colorBlack,
                   blurRadius: 10,
                   spreadRadius: -2,
                 )
@@ -45,11 +47,11 @@ class LineasCountTwoWidget extends StatelessWidget {
           child: Container(
             width: 2,
             height: height,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              boxShadow: const <BoxShadow>[
+            decoration: const BoxDecoration(
+              color: colorBlack,
+              boxShadow: <BoxShadow>[
                 BoxShadow(
-                  color: Colors.white,
+                  color: colorBlack,
                   blurRadius: 10,
                   spreadRadius: -2,
                 )

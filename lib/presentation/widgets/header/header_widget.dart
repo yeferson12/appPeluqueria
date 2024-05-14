@@ -18,18 +18,18 @@ class HeaderWaveGradient extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return SizedBox(
-      height: heightPercentage ?  size.height * 0.3 : size.height * 0.15,
+      height: heightPercentage ?  size.height * 0.3 : size.height * 0.2,
       width: size.width,
       child:heightPercentage 
       ? SlideInDown(
         child: CustomPaint(
           painter:   
-          _HeaderWaveGradientPainterFinal(),
+          _HeaderPainterFinal1(),
         ),
       )
       :  CustomPaint(
           painter:   
-          _HeaderWaveGradientPainterInitial(),
+          _HeaderPainterInitial1(),
       ),
     );
   }
@@ -77,9 +77,10 @@ class _HeaderWaveGradientPainterInitial extends CustomPainter {
     path.quadraticBezierTo(0, size.height * 0.85, size.width * 0.05, size.height * 0.65);
     path.quadraticBezierTo(size.width * 0.1, size.height * 0.9, size.width * 0.1, size.height * 0.3);
     path.quadraticBezierTo(size.width * 0.2, size.height * 0.6, size.width * 0.15, size.height * 0.1);
+    
     path.quadraticBezierTo(size.width * 0.2, 0, size.width * 0.4, size.height * 0.1);
-    path.quadraticBezierTo(size.width * 0.5, size.height * 0.9, size.width * 0.6, size.height * 0.3);
-    path.quadraticBezierTo(size.width * 0.7, size.height * 0.6, size.width * 0.65, size.height * 0.1);
+    path.quadraticBezierTo(size.width * 0.5, size.height * 0.9, size.width * 0.6, size.height * 0.1);
+    path.quadraticBezierTo(size.width * 0.7, size.height * 0.5, size.width * 0.64, size.height * 0.1);
 
     path.quadraticBezierTo(size.width * 0.8, 0, size.width * 0.85, size.height * 0.1);
     path.quadraticBezierTo(size.width * 0.82, size.height * 0.6, size.width * 0.9, size.height * 0.3);
@@ -206,7 +207,7 @@ path.lineTo(size.width, 0);
   }
   }
 
-  class _HeaderCornerTipsGradientPainter extends CustomPainter {
+  class _HeaderPainterInitial1 extends CustomPainter {
   
   @override
   void paint(Canvas canvas, Size size) {
@@ -220,9 +221,9 @@ path.lineTo(size.width, 0);
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: <Color>[
-        Color.fromARGB(255, 113, 1, 158),
-        Color.fromARGB(255, 113, 1, 158),
-        Color.fromARGB(255, 113, 1, 158),
+        Color.fromARGB(255, 32, 32, 32),
+        Color.fromARGB(255, 32, 32, 32),
+        Color.fromARGB(255, 32, 32, 32),
       ],
       stops: [
         0.2,
@@ -238,25 +239,118 @@ path.lineTo(size.width, 0);
     // lapiz.color = Color(0xff615AAB);
     // lapiz.color = Colors.red;
     lapiz.style = PaintingStyle.fill; // .fill .stroke
-    lapiz.strokeWidth = 10;
+    lapiz.strokeWidth = 5;
 
     final path =  Path();
 
-///punto en la esquina
-    path.lineTo(0, size.height);
-    path.quadraticBezierTo(0, size.height * 0.85, size.width * 0.05, size.height * 0.65);
 
-    path.quadraticBezierTo(size.width * 0.2, size.height * 0.7, size.width * 0.17, size.height * 0.13);
-    path.quadraticBezierTo(size.width * 0.15, size.height * 0.2, size.width * 0.18, size.height * 0.1);
-    path.quadraticBezierTo(size.width * 0.4, size.height * 0.2, size.width * 0.5, size.height * 0.1);
+///corte de pelo star
+    path.lineTo(0, 0);
+    path.quadraticBezierTo(0, size.height * 0.5, size.width * 0.01, size.height);
+    path.quadraticBezierTo(size.width * 0.05, size.height * 0.5, size.width * 0.15, size.height * 0.4);
 
-    path.quadraticBezierTo(size.width * 0.8, 0, size.width * 0.85, size.height * 0.1);
-    path.quadraticBezierTo(size.width * 0.75, size.height * 0.7, size.width * 0.95, size.height * 0.7);
-    path.quadraticBezierTo(size.width, size.height * 0.85, size.width, size.height);
+    path.quadraticBezierTo(size.width * 0.11, size.height * 0.6, size.width * 0.14, size.height * 0.85);
+    path.quadraticBezierTo(size.width * 0.2, size.height * 0.5, size.width * 0.38, size.height * 0.4);
+
+    path.quadraticBezierTo(size.width * 0.42, size.height * 0.55, size.width * 0.3, size.height * 0.8);
+    path.quadraticBezierTo(size.width * 0.45, size.height * 0.7, size.width * 0.6, size.height * 0.4);
+    path.quadraticBezierTo(size.width * 0.55, size.height * 0.35, size.width * 0.5, size.height * 0.4);
+
+    path.quadraticBezierTo(size.width * 0.6, size.height * 0.4, size.width * 0.48, size.height * 0.75);
+    path.quadraticBezierTo(size.width * 0.6, size.height * 0.5, size.width * 0.65, size.height * 0.55);
+
+    path.quadraticBezierTo(size.width * 0.58, size.height * 0.8, size.width * 0.48, size.height * 0.85);
+    path.quadraticBezierTo(size.width * 0.7, size.height * 0.9, size.width * 0.85, size.height * 0.4);
+
+    path.quadraticBezierTo(size.width * 0.8, size.height * 0.65, size.width * 0.72, size.height * 0.75);
+    path.quadraticBezierTo(size.width * 0.8, size.height * 0.7, size.width * 0.9, size.height * 0.5);
+
+    path.quadraticBezierTo(size.width * 0.9, size.height * 0.65, size.width * 0.85, size.height * 0.75);
+    path.quadraticBezierTo(size.width * 0.9, size.height * 0.7, size.width * 0.92, size.height * 0.6);
+
+    path.quadraticBezierTo(size.width * 0.95, size.height * 0.7, size.width * 0.9, size.height);
+    path.quadraticBezierTo(size.width * 1.01, size.height * 0.8, size.width, size.height * 0.2);
+    
     path.lineTo( size.width, 0  );
 
     canvas.drawPath(path, lapiz );
   }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+  }
+
+  class _HeaderPainterFinal1 extends CustomPainter {
+  
+  @override
+  void paint(Canvas canvas, Size size) {
+    
+    final Rect rect = Rect.fromCircle(
+      center: const Offset(0.0, 55.0),
+      radius: 180
+    );
+
+    const Gradient gradiente =  LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: <Color>[
+        Color.fromARGB(255, 32, 32, 32),
+        Color.fromARGB(255, 32, 32, 32),
+        Color.fromARGB(255, 32, 32, 32),
+      ],
+      stops: [
+        0.2,
+        0.5,
+        1.0,
+      ]
+    );
+
+
+    final lapiz =  Paint()..shader = gradiente.createShader(rect);
+
+    // Propiedades
+    // lapiz.color = Color(0xff615AAB);
+    // lapiz.color = Colors.red;
+    lapiz.style = PaintingStyle.fill; // .fill .stroke
+    lapiz.strokeWidth = 5;
+
+    final path =  Path();
+
+
+///corte de pelo star
+    path.lineTo(0, 0);
+    path.quadraticBezierTo(0, size.height * 0.5, size.width * 0.01, size.height);
+    path.quadraticBezierTo(size.width * 0.05, size.height * 0.7, size.width * 0.15, size.height * 0.6);
+
+    path.quadraticBezierTo(size.width * 0.11, size.height * 0.6, size.width * 0.14, size.height * 0.85);
+    path.quadraticBezierTo(size.width * 0.2, size.height * 0.7, size.width * 0.38, size.height * 0.6);
+
+    path.quadraticBezierTo(size.width * 0.42, size.height * 0.55, size.width * 0.3, size.height * 0.8);
+    path.quadraticBezierTo(size.width * 0.45, size.height * 0.7, size.width * 0.6, size.height * 0.4);
+    path.quadraticBezierTo(size.width * 0.55, size.height * 0.35, size.width * 0.5, size.height * 0.4);
+
+    path.quadraticBezierTo(size.width * 0.6, size.height * 0.4, size.width * 0.48, size.height * 0.75);
+    path.quadraticBezierTo(size.width * 0.6, size.height * 0.5, size.width * 0.65, size.height * 0.55);
+
+    path.quadraticBezierTo(size.width * 0.58, size.height * 0.8, size.width * 0.48, size.height * 0.85);
+    path.quadraticBezierTo(size.width * 0.7, size.height * 0.9, size.width * 0.85, size.height * 0.4);
+
+    path.quadraticBezierTo(size.width * 0.8, size.height * 0.65, size.width * 0.72, size.height * 0.75);
+    path.quadraticBezierTo(size.width * 0.8, size.height * 0.7, size.width * 0.9, size.height * 0.5);
+
+    path.quadraticBezierTo(size.width * 0.9, size.height * 0.65, size.width * 0.85, size.height * 0.75);
+    path.quadraticBezierTo(size.width * 0.9, size.height * 0.7, size.width * 0.92, size.height * 0.6);
+
+    path.quadraticBezierTo(size.width * 0.95, size.height * 0.7, size.width * 0.9, size.height);
+    path.quadraticBezierTo(size.width * 1.01, size.height * 0.8, size.width, size.height * 0.2);
+    
+    path.lineTo( size.width, 0  );
+
+    canvas.drawPath(path, lapiz );
+  }
+
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
