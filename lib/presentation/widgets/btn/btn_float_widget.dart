@@ -52,7 +52,7 @@ class BtnFloatWidget extends StatelessWidget {
 
                   }
 
-                  else if (stateMap.infoMarkerBarbe) {
+                  else if ( stateMap.infoMarkerBarbe || stateMap.isOpenMenuCircule ) {
 
                     return IconButton(
                       icon: const Icon(
@@ -61,9 +61,12 @@ class BtnFloatWidget extends StatelessWidget {
                         size: 30.0,
                       ),
                       onPressed: () {
-                        infoBarber.add(OnBackInfoBarberEvent());
-                        mapBloc.add(OnCloseInfoMarkerBarberEvent());
-                        mapBloc.add(OnClearPolylinesEvent());
+
+                          mapBloc.add(OnCloseInfoCircleMenuEvent());
+                          infoBarber.add(OnBackInfoBarberEvent());
+                          mapBloc.add(OnCloseInfoMarkerBarberEvent());
+                          mapBloc.add(OnClearPolylinesEvent());
+
                       });
                     
                   }else{
@@ -75,8 +78,7 @@ class BtnFloatWidget extends StatelessWidget {
                         size: 30.0,
                       ),
                       onPressed: () {
-                        // mapBloc.add(OnCloseInfoMarkerBarberEvent());
-                        mapDrawer.add(OnMapTabEvent());
+                         mapBloc.add(OnOpenCircleMenuEvent());
                       });
 
 

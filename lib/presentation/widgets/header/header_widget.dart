@@ -17,19 +17,22 @@ class HeaderWaveGradient extends StatelessWidget {
 
     final size = MediaQuery.of(context).size;
 
-    return SizedBox(
-      height: heightPercentage ?  size.height * 0.3 : size.height * 0.2,
-      width: size.width,
-      child:heightPercentage 
-      ? SlideInDown(
-        child: CustomPaint(
-          painter:   
-          _HeaderPainterFinal1(),
+    return Positioned(
+      top: 0,
+      child: SizedBox(
+        height: heightPercentage ?  size.height * 0.3 : size.height * 0.2,
+        width: size.width,
+        child:heightPercentage 
+        ? SlideInDown(
+          child: CustomPaint(
+            painter:   
+            _HeaderPainterFinal1(),
+          ),
+        )
+        :  CustomPaint(
+            painter:   
+            _HeaderPainterInitial1(),
         ),
-      )
-      :  CustomPaint(
-          painter:   
-          _HeaderPainterInitial1(),
       ),
     );
   }

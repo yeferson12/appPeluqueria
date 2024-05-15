@@ -18,6 +18,9 @@ class OnStartFollowingUserEvent extends MapEvent {}
 class OnInfoMarkerBarberEvent extends MapEvent {}
 class OnCloseInfoMarkerBarberEvent extends MapEvent {}
 
+class OnOpenCircleMenuEvent extends MapEvent {}
+class OnCloseInfoCircleMenuEvent extends MapEvent {}
+
 class DisplayPolylinesEvent extends MapEvent {
   final Map<String, Polyline> polylines;
   final Map<String, Marker> markers;

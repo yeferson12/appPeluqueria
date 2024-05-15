@@ -11,6 +11,7 @@ import '../../views/views.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../widgets/widgets.dart';
+import 'dart:math' as math;
 
 
 class AnimationDrawer extends StatelessWidget {
@@ -27,6 +28,16 @@ class AnimationDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    final size = MediaQuery.of(context).size;
+
+    List<IconData> icons = [
+      Icons.location_searching_outlined,
+      Icons.directions_run_rounded,
+      Icons.directions_car_filled_sharp,
+      Icons.minor_crash_sharp,
+    ];
+
     return BlocBuilder<DrawerBloc, DrawerState>(
       builder: (context, stateDrawer) {
         return Container(
@@ -58,18 +69,27 @@ class AnimationDrawer extends StatelessWidget {
                                 const BorderRadius.all(Radius.circular(60)),
                             child: Scaffold(
                               body: Stack(
+                                alignment: Alignment.bottomCenter,
                                 children: [
+
                                   MapView(
                                     initialLocation: initialLocation,
                                     polylines: polylines,
                                     markers: markers,
                                   ),
+
+                                  if( state.isOpenMenuCircule )
+                                   _CircularMenu(icons: icons),
+
                                   const InfobarberBody(),
-                                  HeaderWaveGradient(
-                                    heightPercentage: state.infoMarkerBarbe,
-                                  ),
+
+                                   HeaderWaveGradient(
+                                      heightPercentage: state.infoMarkerBarbe,
+                                    ),
+
                                   if (state.infoMarkerBarbe)
                                     const _InfoBarberHeader()
+                                    
                                 ],
                               ),
 
@@ -84,6 +104,37 @@ class AnimationDrawer extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+class _CircularMenu extends StatelessWidget {
+  const _CircularMenu({
+    super.key,
+    required this.icons,
+  });
+
+  final List<IconData> icons;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+     bottom: - 90,
+       child: CircleAvatar(
+         backgroundColor:  Color(0xff0088E0),
+         maxRadius: 100,
+         child: Stack(
+           alignment: Alignment.center,
+           children: [
+             for (int i = 0; i < icons.length; i++)
+               Positioned(
+                 left: 90 + 70 * math.cos(i * math.pi / 3),
+                 top: 80 - 65 * math.sin(i * math.pi / 3),
+                 child: Icon(icons[i]),
+               ),
+           ],
+         ),
+       ),
+     );
   }
 }
 
@@ -139,7 +190,9 @@ class _InfoBarberHeader extends StatelessWidget {
                       icon: const Icon(Icons.location_on, color: Colors.white,),
                       onPressed: () async {
                         infoBarber.add(OnBackInfoBarberEvent());
-
+                        
+                        mapBloc.add(OnOpenCircleMenuEvent());
+                        
                         final start = locationBloc.state.lastKnownLocation;
                         if (start == null) return;
 
@@ -153,9 +206,7 @@ class _InfoBarberHeader extends StatelessWidget {
                     ),
                     IconButton(
                       icon: const Icon(Icons.message, color: Colors.white,),
-                      onPressed: () {
-                        GoRouter.of(context).go('/chat-screen');
-                      },
+                      onPressed: () {},
                     ),
                     IconButton(
                       icon: const Icon(Icons.info_outline, color: Colors.white,),

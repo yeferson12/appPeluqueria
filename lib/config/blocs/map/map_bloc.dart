@@ -37,6 +37,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnClearPolylinesEvent>( onClearPolylinesEvent );
     on<OnGetInfoBarber>(  (event, emit) => emit( state.copyWith( infoByBarber: event.infoByBarber )) );
     on<OnSelectBarberEvent>(  (event, emit) => emit( state.copyWith( selectedBarber: event.barber )) );
+    on<OnOpenCircleMenuEvent>((event, emit) => emit( state.copyWith( isOpenMenuCircule: true ) ));
+    on<OnCloseInfoCircleMenuEvent>((event, emit) => emit( state.copyWith( isOpenMenuCircule: false ) ));
 
     locationStateSubscription = locationBloc.stream.listen(( locationState ) {
 
