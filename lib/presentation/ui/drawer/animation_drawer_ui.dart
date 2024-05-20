@@ -117,10 +117,14 @@ class _CircularMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final locationBloc = BlocProvider.of<LocationBloc>(context);
+    final mapBloc = BlocProvider.of<MapBloc>(context);
+    
     return Positioned(
      bottom: - 90,
        child: CircleAvatar(
-         backgroundColor:  Color(0xff0088E0),
+         backgroundColor:  const Color(0xff0088E0),
          maxRadius: 100,
          child: Stack(
            alignment: Alignment.center,
@@ -129,7 +133,18 @@ class _CircularMenu extends StatelessWidget {
                Positioned(
                  left: 90 + 70 * math.cos(i * math.pi / 3),
                  top: 80 - 65 * math.sin(i * math.pi / 3),
-                 child: Icon(icons[i]),
+                 child: GestureDetector(
+                  onTap: () {
+                    if ( icons[0] == icons[i]) {
+
+                      final userLocation = locationBloc.state.lastKnownLocation;
+
+                     mapBloc.moveCamera(userLocation!);
+
+                    }
+                  },
+                  child: Icon(icons[i])
+                  ),
                ),
            ],
          ),
