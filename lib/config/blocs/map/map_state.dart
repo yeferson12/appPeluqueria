@@ -7,6 +7,7 @@ class MapState extends Equatable {
   final bool isOpenMenuCircule;
   final Map<String, Polyline> polylines;
   final Map<String, Marker> markers;
+  final Map<String, Marker> allMarkers;
   final List<BarberResponse> infoByBarber;
   final BarberResponse? selectedBarber;
 
@@ -17,10 +18,12 @@ class MapState extends Equatable {
     this.isOpenMenuCircule = false,
     Map<String, Polyline>? polylines,
     Map<String, Marker>? markers,
+    Map<String, Marker>? allMarkers,
     List<BarberResponse>? infoByBarber,
     this.selectedBarber
   }): polylines = polylines ?? const {},
       markers = markers ?? const {},
+      allMarkers = allMarkers ?? const {},
       infoByBarber = infoByBarber ?? const [];
 
 
@@ -31,6 +34,7 @@ class MapState extends Equatable {
     bool? isOpenMenuCircule,
     Map<String, Polyline>? polylines,
     Map<String, Marker>? markers,
+    Map<String, Marker>? allMarkers,
     BarberResponse? selectedBarber,
     List<BarberResponse>? infoByBarber,
   }) 
@@ -39,6 +43,7 @@ class MapState extends Equatable {
     followUser: followUser ?? this.followUser,
     polylines: polylines ?? this.polylines,
     markers: markers ?? this.markers,
+    allMarkers: allMarkers ?? this.allMarkers,
     infoMarkerBarbe: infoMarkerBarbe ?? this.infoMarkerBarbe,
     infoByBarber: infoByBarber ?? this.infoByBarber,
     selectedBarber: selectedBarber ?? this.selectedBarber,
@@ -51,6 +56,7 @@ class MapState extends Equatable {
     followUser, 
     polylines, 
     markers, 
+    allMarkers,
     infoMarkerBarbe, 
     infoByBarber, 
     isOpenMenuCircule,

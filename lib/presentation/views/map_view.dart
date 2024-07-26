@@ -46,6 +46,10 @@ class MapView extends StatelessWidget {
       
           onMapCreated: ( controller ) => mapBloc.add( OnMapInitialzedEvent(controller) ),
           onCameraMove: ( position ) => mapBloc.mapCenter = position.target,
+          onCameraIdle: () async {
+            final bounds = await mapBloc.mapController!.getVisibleRegion();
+            mapBloc.add(OnMapIdleEvent(bounds));
+          },
       
         ),
       ),

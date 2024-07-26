@@ -42,3 +42,9 @@ class OnSelectBarberEvent extends MapEvent {
 }
 
 class OnClearPolylinesEvent extends MapEvent {}
+
+class OnMapIdleEvent extends MapEvent {
+  final LatLngBounds bounds;
+
+  const OnMapIdleEvent(this.bounds);
+}

@@ -39,6 +39,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnSelectBarberEvent>(  (event, emit) => emit( state.copyWith( selectedBarber: event.barber )) );
     on<OnOpenCircleMenuEvent>((event, emit) => emit( state.copyWith( isOpenMenuCircule: true ) ));
     on<OnCloseInfoCircleMenuEvent>((event, emit) => emit( state.copyWith( isOpenMenuCircule: false ) ));
+    on<OnMapIdleEvent>(_onMapIdle);
 
     locationStateSubscription = locationBloc.stream.listen(( locationState ) {
 
@@ -50,6 +51,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     
   }
 
+  GoogleMapController? get mapController => _mapController;
+
    void _onInitMap( OnMapInitialzedEvent event, Emitter<MapState> emit ) {
 
     _mapController = event.controller;
@@ -58,6 +61,18 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     emit( state.copyWith( isMapInitialized: true ) );
 
   }
+
+  void _onMapIdle(OnMapIdleEvent event, Emitter<MapState> emit) async {
+  final bounds = await _mapController!.getVisibleRegion();
+  final visibleMarkers = state.allMarkers.entries.where((entry) {
+    final marker = entry.value;
+    return bounds.contains(marker.position);
+  }).map((e) => MapEntry(e.key, e.value)).toMap();
+
+  emit(state.copyWith(markers: visibleMarkers));
+}
+
+
 
 
   void moveCamera( LatLng newLocation ) {
@@ -128,6 +143,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     // _mapController?.showMarkerInfoWindow(const MarkerId('start'));
 
   }
+  
 
   Future getBarberMarkes( ) async {
 
@@ -139,36 +155,32 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
     final iconBarber = await getAssetImageMarker( img: 'assets/barber1.png', size: 5 );
 
-      barbers.asMap().forEach((index, barber) {
-
-    final marker = Marker(
+    barbers.asMap().forEach((index, barber) {
+     final marker = Marker(
       markerId: MarkerId('${barber.name}_$index'),
       position: barber.location,
       icon: iconBarber,
       onTap: () {
-        
         review.clear();
-        add( OnInfoMarkerBarberEvent() );
+        add(OnInfoMarkerBarberEvent());
 
-        if( barber.review != null) {
+        if (barber.review != null) {
           for (var itemReview in barber.review!) {
-
-              if (itemReview.idBarber ==  barber.id) {
-                review.add(itemReview);  
-          }
+            if (itemReview.idBarber == barber.id) {
+              review.add(itemReview);
+            }
           }
         }
 
-        
-        final  barberResponse = BarberResponse(
+        final barberResponse = BarberResponse(
           id: barber.id,
           img: barber.img,
           name: barber.name,
           location: barber.location,
           review: review,
           imgBarber: barber.imgBarber
-         );
-         add(OnSelectBarberEvent(barberResponse));
+        );
+        add(OnSelectBarberEvent(barberResponse));
       },
     );
 
@@ -177,6 +189,8 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   
   add(OnGetMarkersBarber(markers));
+  // ignore: invalid_use_of_visible_for_testing_member
+  emit(state.copyWith(allMarkers: markers));
 
   }
 
@@ -184,5 +198,11 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   Future<void> close() {
     locationStateSubscription?.cancel();
     return super.close();
+  }
+}
+
+extension IterableExtension<K, V> on Iterable<MapEntry<K, V>> {
+  Map<K, V> toMap() {
+    return Map<K, V>.fromEntries(this);
   }
 }
