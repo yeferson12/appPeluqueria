@@ -1,23 +1,18 @@
-
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../infrastruture/models/models.dart';
 
-
 class ImgSlideShow extends StatelessWidget {
   final List<ImgsBarber> imgBarber;
   const ImgSlideShow({
     super.key,
-    required this.imgBarber
-    });
-
+    required this.imgBarber,
+  });
 
   @override
   Widget build(BuildContext context) {
-
-    // final colors = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
 
     return Container(
@@ -35,9 +30,9 @@ class ImgSlideShow extends StatelessWidget {
         itemHeight: size.height * 0.19,
         itemCount: imgBarber.length,
         itemBuilder: (context, index) {
-           return _Slide(imgBarber: imgBarber[index]);
-        }
-         ),
+          return _Slide(imgBarber: imgBarber[index]);
+        },
+      ),
     );
   }
 }
@@ -45,77 +40,74 @@ class ImgSlideShow extends StatelessWidget {
 class _Slide extends StatelessWidget {
   final ImgsBarber imgBarber;
 
-  const _Slide({ required this.imgBarber });
+  const _Slide({required this.imgBarber});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    // if( imgBarber.imgBarber.isEmpty) {
-    //   return SizedBox(
-    //     width: double.infinity,
-    //     height: size.height * 0.5,
-    //     child: const Center(
-    //       child: CircularProgressIndicator(),
-    //     ),
-    //   );
-    // }
-
     return Padding(
-  padding: const EdgeInsets.only(bottom: 1),
-  child: DecoratedBox(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-      boxShadow: const [
-        BoxShadow(
-          color: Colors.white,
-          blurRadius: 3,
-        ),
-      ],
-    ),
-    child: Row(
-          children: [
-            SizedBox(
-              width: size.width * 0.26, 
-              child: SvgPicture.asset(
-                  imgBarber.imgBarber,
-                  width: size.width * 0.2,
-                  height: size.height * 0.15,
-                ),
+      padding: const EdgeInsets.only(bottom: 1),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.white,
+              blurRadius: 3,
             ),
-             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Yeferson monsalve',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
-                    ),
-                    SizedBox(height: size.height * 0.015,),
-                    const Text(
-                      'Edad: 30 años',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                    const Text(
-                      'Turnos: 5',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                    const Text(
-                      'Disponible: De L a V',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                    GestureDetector(
+          ],
+        ),
+        child: Row(
+  children: [
+    SizedBox(
+      width: size.width * 0.26,
+      child: SvgPicture.asset(
+        imgBarber.imgBarber,
+        width: size.width * 0.2,
+        height: size.height * 0.15,
+      ),
+    ),
+    Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Flexible( // Ajustar el texto para evitar desbordamiento
+              child: Text(
+                'Yeferson Monsalve',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+                overflow: TextOverflow.ellipsis, // Si el texto es muy largo
+              ),
+            ),
+            SizedBox(height: size.height * 0.015),
+            const Flexible(
+              child: Text(
+                'Edad: 30 años',
+                style: TextStyle(fontSize: 14),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const Flexible(
+              child: Text(
+                'Turnos: 5',
+                style: TextStyle(fontSize: 14),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const Flexible(
+              child: Text(
+                'Disponible: De L a V',
+                style: TextStyle(fontSize: 14),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            GestureDetector(
               onTap: () {
                 // Acción al presionar el icono
               },
@@ -126,15 +118,13 @@ class _Slide extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-                  ],
-                ),
-              ),
-            ),
-            
           ],
         ),
-  ),
-);
-
+      ),
+    ),
+  ],
+)
+      ),
+    );
   }
 }

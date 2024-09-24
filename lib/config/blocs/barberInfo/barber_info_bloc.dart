@@ -23,7 +23,9 @@ class BarberInfoBloc extends Bloc<BarberInfoEvent, BarberInfoState> {
 
     mapBlocStateSubscription = mapBloc.stream.listen(( mapState ) {
 
-      getInfoBarber( mapState.selectedBarber! );
+      if (mapState.selectedBarber != null) {
+        getInfoBarber(mapState.selectedBarber!);
+      } 
     });
   }
 

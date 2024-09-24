@@ -48,7 +48,6 @@ class InfobarberBody extends StatelessWidget {
                             SizedBox(height: size.height * 0.26),
                             Container(
                               width: size.width * 0.8,
-                              height: size.height * 0.20,
                               padding: const EdgeInsets.all(20),
                               margin: const EdgeInsets.only(bottom: 10),
                               decoration: BoxDecoration(
@@ -56,7 +55,7 @@ class InfobarberBody extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child:  const Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   _InfoStoreInitial(
@@ -147,29 +146,6 @@ class _InfoStoreInitial extends StatelessWidget {
   }
 }
 
-final List<InfoEmployesModel> svgList = [
-  InfoEmployesModel(
-      nameBarber: 'Yeferson',
-      svgPath: 'assets/svg/avatar1.svg',
-      isActive: true),
-  InfoEmployesModel(
-      nameBarber: 'Juanpis',
-      svgPath: 'assets/svg/avatar2.svg',
-      isActive: false),
-  InfoEmployesModel(
-      nameBarber: 'Tina', svgPath: 'assets/svg/avatar3.svg', isActive: false),
-  InfoEmployesModel(
-      nameBarber: 'Emmy', svgPath: 'assets/svg/avatar4.svg', isActive: true),
-  InfoEmployesModel(
-      nameBarber: 'Isabell', svgPath: 'assets/svg/avatar5.svg', isActive: true),
-  InfoEmployesModel(
-      nameBarber: 'albert', svgPath: 'assets/svg/avatar6.svg', isActive: true),
-  InfoEmployesModel(
-      nameBarber: 'jonathan',
-      svgPath: 'assets/svg/avatar7.svg',
-      isActive: true),
-  // Agrega más elementos según sea necesario
-];
 
 class _Reviews extends StatelessWidget {
   const _Reviews({

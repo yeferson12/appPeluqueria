@@ -29,8 +29,6 @@ class AnimationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    final size = MediaQuery.of(context).size;
-
     List<IconData> icons = [
       Icons.location_searching_outlined,
       Icons.directions_run_rounded,
@@ -153,99 +151,88 @@ class _CircularMenu extends StatelessWidget {
   }
 }
 
-
-
-
-
-
-
 class _InfoBarberHeader extends StatelessWidget {
   const _InfoBarberHeader({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
-    final infoBarber = BlocProvider.of<BarberInfoBloc>(context);
-    final mapBloc = BlocProvider.of<MapBloc>(context);
-    final searchBloc = BlocProvider.of<SearchBloc>(context);
-    final locationBloc = BlocProvider.of<LocationBloc>(context);
+Widget build(BuildContext context) {
+  final infoBarber = BlocProvider.of<BarberInfoBloc>(context);
+  final mapBloc = BlocProvider.of<MapBloc>(context);
+  final searchBloc = BlocProvider.of<SearchBloc>(context);
+  final locationBloc = BlocProvider.of<LocationBloc>(context);
 
-    return SlideInDown(
-      child: BlocBuilder<BarberInfoBloc, BarberInfoState>(
-        builder: (context, stateBarberInfo) {
-          return Stack(
-            children: [
-               Positioned(
-                top: 50,
-                left: 20,
-                child: CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage(stateBarberInfo.selectedBarber!.img),
-                ),
-              ),
-               Positioned(
-                top: 60,
-                left: 90,
-                child: Text(
-                  stateBarberInfo.selectedBarber!.name,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 100,
-                left: 75,
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.location_on, color: Colors.white,),
-                      onPressed: () async {
-                        infoBarber.add(OnBackInfoBarberEvent());
-                        
-                        mapBloc.add(OnOpenCircleMenuEvent());
-                        
-                        final start = locationBloc.state.lastKnownLocation;
-                        if (start == null) return;
-
-                        final end = mapBloc.mapCenter;
-                        if (end == null) return;
-
-                        final destination =
-                            await searchBloc.getCoorsStartToEnd(start, end);
-                        await mapBloc.drawRoutePolyline(destination);
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.message, color: Colors.white,),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.info_outline, color: Colors.white,),
-                      onPressed: () {
-                        infoBarber.add(OnInfoBarberEvent());
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              // Positioned(
-              //   top: 170,
-              //   left: 175,
-              //   child: IconButton(
-              //     icon: const Icon(Icons.cancel_outlined, size: 30,),
-              //     onPressed: () {
-              //       // Acción al presionar el botón de flecha hacia arriba
-              //     },
-              //   ),
-              // ),
-            ],
-          );
-        },
-      ),
-    );
+  // Precargar la imagen antes de la animación
+  if (infoBarber.state.selectedBarber != null) {
+    precacheImage(AssetImage(infoBarber.state.selectedBarber!.img), context);
   }
+
+  return SlideInDown(
+    child: BlocBuilder<BarberInfoBloc, BarberInfoState>(
+      builder: (context, stateBarberInfo) {
+        return Stack(
+          children: [
+            Positioned(
+              top: 50,
+              left: 20,
+              child: CircleAvatar(
+                radius: 30,
+                backgroundImage: AssetImage(stateBarberInfo.selectedBarber!.img),
+              ),
+            ),
+            Positioned(
+              top: 60,
+              left: 90,
+              child: Text(
+                stateBarberInfo.selectedBarber!.name,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 100,
+              left: 75,
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.location_on, color: Colors.white),
+                    onPressed: () async {
+                      infoBarber.add(OnBackInfoBarberEvent());
+
+                      mapBloc.add(OnOpenCircleMenuEvent());
+
+                      final start = locationBloc.state.lastKnownLocation;
+                      if (start == null) return;
+
+                      final end = mapBloc.mapCenter;
+                      if (end == null) return;
+
+                      final destination =
+                          await searchBloc.getCoorsStartToEnd(start, end);
+                      await mapBloc.drawRoutePolyline(destination);
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.message, color: Colors.white),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.info_outline, color: Colors.white),
+                    onPressed: () {
+                      infoBarber.add(OnInfoBarberEvent());
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    ),
+  );
+}
 }
