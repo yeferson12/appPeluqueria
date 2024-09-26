@@ -33,6 +33,33 @@ class BarberInfoBloc extends Bloc<BarberInfoEvent, BarberInfoState> {
     add(OnGetInfoBarberEvent( reviews ));
   }
 
+  void goToNextBarber() {
+    final nextMarker = mapBloc.getNextBarberMarker();
+    if (nextMarker != null) {
+      final nextBarber = getBarberByMarker(nextMarker);
+      if (nextBarber != null) {
+        mapBloc.moveCamera(nextBarber.location);
+        add(OnGetInfoBarberEvent(nextBarber));
+      }
+    }
+  }
+
+  void goToPreviusBarber() {
+    final previousMarker = mapBloc.getPreviousBarberMarker();
+    if (previousMarker != null) {
+      final previousBarber = getBarberByMarker(previousMarker);
+      if (previousBarber != null) {
+        mapBloc.moveCamera(previousBarber.location);
+        add(OnGetInfoBarberEvent(previousBarber));
+      }
+    }
+  }
+
+  BarberResponse? getBarberByMarker(Marker marker) {
+  return mapBloc.state.markerToBarber[marker.markerId.value];
+}
+
+
    @override
   Future<void> close() {
     mapBlocStateSubscription?.cancel();

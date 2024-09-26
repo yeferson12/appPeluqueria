@@ -112,7 +112,7 @@ class _InfoStoreInitial extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return SizedBox(
-      height: size.height * 0.028,
+      height: size.height * 0.038,
       child: Row(
         children: [
           Icon(icon, color: Colors.black),

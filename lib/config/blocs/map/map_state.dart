@@ -8,7 +8,7 @@ class MapState extends Equatable {
   final Map<String, Polyline> polylines;
   final Map<String, Marker> markers;
   final Map<String, Marker> allMarkers;
-  final List<BarberResponse> infoByBarber;
+  final Map<String, BarberResponse> markerToBarber;
   final BarberResponse? selectedBarber;
 
   const MapState({
@@ -19,12 +19,12 @@ class MapState extends Equatable {
     Map<String, Polyline>? polylines,
     Map<String, Marker>? markers,
     Map<String, Marker>? allMarkers,
-    List<BarberResponse>? infoByBarber,
+    Map<String, BarberResponse>? markerToBarber,
     this.selectedBarber
   }): polylines = polylines ?? const {},
       markers = markers ?? const {},
       allMarkers = allMarkers ?? const {},
-      infoByBarber = infoByBarber ?? const [];
+      markerToBarber = markerToBarber ?? const {};
 
 
   MapState copyWith({
@@ -36,19 +36,20 @@ class MapState extends Equatable {
     Map<String, Marker>? markers,
     Map<String, Marker>? allMarkers,
     BarberResponse? selectedBarber,
-    List<BarberResponse>? infoByBarber,
-  }) 
-  => MapState(
+    Map<String, BarberResponse>? markerToBarber,
+  }) {
+   return MapState(
     isMapInitialized: isMapInitialized ?? this.isMapInitialized,
     followUser: followUser ?? this.followUser,
     polylines: polylines ?? this.polylines,
     markers: markers ?? this.markers,
     allMarkers: allMarkers ?? this.allMarkers,
     infoMarkerBarbe: infoMarkerBarbe ?? this.infoMarkerBarbe,
-    infoByBarber: infoByBarber ?? this.infoByBarber,
+    markerToBarber: markerToBarber ?? this.markerToBarber,
     selectedBarber: selectedBarber ?? this.selectedBarber,
     isOpenMenuCircule: isOpenMenuCircule ?? this.isOpenMenuCircule,
   );
+   }
 
   @override
   List<Object> get props => [ 
@@ -58,7 +59,7 @@ class MapState extends Equatable {
     markers, 
     allMarkers,
     infoMarkerBarbe, 
-    infoByBarber, 
+    markerToBarber, 
     isOpenMenuCircule,
     selectedBarber ?? BarberResponse(id: 0, img: '',name: '',location: LatLng(40.43455, -34.345345), imgBarber: [])
     ];

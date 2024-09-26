@@ -31,10 +31,6 @@ class OnGetMarkersBarber extends MapEvent {
   final Map<String, Marker> markers;
   const OnGetMarkersBarber(this.markers);
 }
-class OnGetInfoBarber extends MapEvent {
-  final List<BarberResponse> infoByBarber;
-  const OnGetInfoBarber(this.infoByBarber);
-}
 
 class OnSelectBarberEvent extends MapEvent {
   final BarberResponse barber;

@@ -163,7 +163,6 @@ Widget build(BuildContext context) {
   final searchBloc = BlocProvider.of<SearchBloc>(context);
   final locationBloc = BlocProvider.of<LocationBloc>(context);
 
-  // Precargar la imagen antes de la animación
   if (infoBarber.state.selectedBarber != null) {
     precacheImage(AssetImage(infoBarber.state.selectedBarber!.img), context);
   }
@@ -171,66 +170,83 @@ Widget build(BuildContext context) {
   return SlideInDown(
     child: BlocBuilder<BarberInfoBloc, BarberInfoState>(
       builder: (context, stateBarberInfo) {
-        return Stack(
-          children: [
-            Positioned(
-              top: 50,
-              left: 20,
-              child: CircleAvatar(
-                radius: 30,
-                backgroundImage: AssetImage(stateBarberInfo.selectedBarber!.img),
-              ),
-            ),
-            Positioned(
-              top: 60,
-              left: 90,
-              child: Text(
-                stateBarberInfo.selectedBarber!.name,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 10),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
+                      onPressed: () {
+                        infoBarber.goToPreviusBarber();
+                      },
+                    ),
+                    const Spacer(),
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundImage: AssetImage(stateBarberInfo.selectedBarber!.img),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      stateBarberInfo.selectedBarber!.name,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      icon: const Icon(Icons.arrow_forward_ios_rounded, color: Colors.white),
+                      onPressed: () {
+                        infoBarber.goToNextBarber();
+                      },
+                    ),
+                  ],
                 ),
-              ),
+          
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.location_on, color: Colors.white),
+                        onPressed: () async {
+                          infoBarber.add(OnBackInfoBarberEvent());
+                          mapBloc.add(OnOpenCircleMenuEvent());
+          
+                          final start = locationBloc.state.lastKnownLocation;
+                          if (start == null) return;
+          
+                          final end = mapBloc.mapCenter;
+                          if (end == null) return;
+          
+                          final destination = await searchBloc.getCoorsStartToEnd(start, end);
+                          await mapBloc.drawRoutePolyline(destination);
+                        },
+                      ),
+                      const SizedBox(width: 20),
+                      IconButton(
+                        icon: const Icon(Icons.message, color: Colors.white),
+                        onPressed: () {},
+                      ),
+                      const SizedBox(width: 20),
+                      IconButton(
+                        icon: const Icon(Icons.info_outline, color: Colors.white),
+                        onPressed: () {
+                          infoBarber.add(OnInfoBarberEvent());
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            Positioned(
-              top: 100,
-              left: 75,
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.location_on, color: Colors.white),
-                    onPressed: () async {
-                      infoBarber.add(OnBackInfoBarberEvent());
-
-                      mapBloc.add(OnOpenCircleMenuEvent());
-
-                      final start = locationBloc.state.lastKnownLocation;
-                      if (start == null) return;
-
-                      final end = mapBloc.mapCenter;
-                      if (end == null) return;
-
-                      final destination =
-                          await searchBloc.getCoorsStartToEnd(start, end);
-                      await mapBloc.drawRoutePolyline(destination);
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.message, color: Colors.white),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.info_outline, color: Colors.white),
-                    onPressed: () {
-                      infoBarber.add(OnInfoBarberEvent());
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
         );
+
       },
     ),
   );

@@ -35,7 +35,6 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnInfoMarkerBarberEvent>((event, emit) => emit( state.copyWith( infoMarkerBarbe: true ) ));
     on<OnCloseInfoMarkerBarberEvent>((event, emit) => emit( state.copyWith( infoMarkerBarbe: false ) ));
     on<OnClearPolylinesEvent>( onClearPolylinesEvent );
-    on<OnGetInfoBarber>(  (event, emit) => emit( state.copyWith( infoByBarber: event.infoByBarber )) );
     on<OnSelectBarberEvent>(  (event, emit) => emit( state.copyWith( selectedBarber: event.barber )) );
     on<OnOpenCircleMenuEvent>((event, emit) => emit( state.copyWith( isOpenMenuCircule: true ) ));
     on<OnCloseInfoCircleMenuEvent>((event, emit) => emit( state.copyWith( isOpenMenuCircule: false ) ));
@@ -93,6 +92,52 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   }
 
+  Marker? getNextBarberMarker() {
+  final markerKeys = state.markers.keys.toList();
+  if (state.selectedBarber == null) return null;
+
+
+  final currentMarkerKey = markerKeys.firstWhere(
+    (key) => key.contains(state.selectedBarber!.id.toString()),
+    orElse: () => '', 
+  );
+  if (currentMarkerKey.isEmpty) return null;
+
+  final currentMarkerIndex = markerKeys.indexOf(currentMarkerKey);
+
+  if (currentMarkerIndex == -1 || currentMarkerIndex + 1 >= markerKeys.length) {
+    return null; // No hay más barberías
+  }
+
+  final nextMarkerKey = markerKeys[currentMarkerIndex + 1];
+  return state.markers[nextMarkerKey];
+}
+
+Marker? getPreviousBarberMarker() {
+  final markerKeys = state.markers.keys.toList();
+  if (state.selectedBarber == null) return null;
+
+  final currentMarkerKey = markerKeys.firstWhere(
+    (key) => key.contains(state.selectedBarber!.id.toString()),
+    orElse: () => '', 
+  );
+
+  if (currentMarkerKey.isEmpty) return null;
+
+  final currentMarkerIndex = markerKeys.indexOf(currentMarkerKey);
+
+  if (currentMarkerIndex == -1 || currentMarkerIndex + 1 >= markerKeys.length) {
+    return null;  
+  }
+
+  final previousMarkerKey = markerKeys[currentMarkerIndex];
+  return state.markers[previousMarkerKey];
+}
+
+
+
+
+
   Future drawRoutePolyline( RouteDestination destination ) async {
 
     final myRoute = Polyline(
@@ -145,54 +190,50 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   }
   
 
-  Future getBarberMarkes( ) async {
+  Future getBarberMarkes() async {
+  final LocationBarberservices barberService = LocationBarberservices();
+  final barbers = await barberService.getLocationBarberService();
+  final markers = <String, Marker>{};
+  final markerToBarber = <String, BarberResponse>{};  // Nuevo mapa
 
-    final LocationBarberservices barberService = LocationBarberservices();
+  final iconBarber = await getAssetImageMarker(img: 'assets/barber1.png', size: 5);
 
-    final barbers = await barberService.getLocationBarberService();
-    final markers = <String, Marker>{};
-    final List<ReviewsModal> review = [];
-
-    final iconBarber = await getAssetImageMarker( img: 'assets/barber1.png', size: 5 );
-
-    barbers.asMap().forEach((index, barber) {
-     final marker = Marker(
-      markerId: MarkerId('${barber.name}_$index'),
+  barbers.asMap().forEach((index, barber) {
+    final markerId = '${barber.name}_$index';
+    final marker = Marker(
+      markerId: MarkerId(markerId),
       position: barber.location,
       icon: iconBarber,
       onTap: () {
-        review.clear();
-        add(OnInfoMarkerBarberEvent());
-
-        if (barber.review != null) {
-          for (var itemReview in barber.review!) {
-            if (itemReview.idBarber == barber.id) {
-              review.add(itemReview);
-            }
-          }
-        }
-
         final barberResponse = BarberResponse(
           id: barber.id,
           img: barber.img,
           name: barber.name,
           location: barber.location,
-          review: review,
-          imgBarber: barber.imgBarber
+          review: barber.review ?? [],
+          imgBarber: barber.imgBarber,
         );
-        add(OnSelectBarberEvent(barberResponse));
+
+        add(OnSelectBarberEvent(barberResponse));  // Asignar el barbero seleccionado
+        add(OnInfoMarkerBarberEvent());
       },
     );
 
-    markers['${barber.name}_$index'] = marker;
+    markers[markerId] = marker;
+    markerToBarber[markerId] = BarberResponse(
+      id: barber.id,
+      img: barber.img,
+      name: barber.name,
+      location: barber.location,
+      review: barber.review,
+      imgBarber: barber.imgBarber
+    );
   });
 
-  
   add(OnGetMarkersBarber(markers));
-  // ignore: invalid_use_of_visible_for_testing_member
-  emit(state.copyWith(allMarkers: markers));
+  emit(state.copyWith(allMarkers: markers, markerToBarber: markerToBarber));  // Guardar el mapa
+}
 
-  }
 
   @override
   Future<void> close() {
