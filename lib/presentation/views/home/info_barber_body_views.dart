@@ -157,23 +157,11 @@ class _Reviews extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        GestureDetector(
-          onTap: () => _showCustomModalReviews(context),
-          child: Container(
-            padding: const EdgeInsets.all(7),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(width: 1, color: Colors.purple)),
-            child: const Text(
-              'Reseñas',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
+        BtnTrasparantWidget(
+            title: "Reseñas", 
+            color: Colors.red, 
+            onPress: () => _showCustomModalReviews(context),
           ),
-        ),
         const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

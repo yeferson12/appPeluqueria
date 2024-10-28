@@ -1,9 +1,7 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../config/blocs/blocs.dart';
@@ -107,7 +105,6 @@ class AnimationDrawer extends StatelessWidget {
 
 class _CircularMenu extends StatelessWidget {
   const _CircularMenu({
-    super.key,
     required this.icons,
   });
 
@@ -152,9 +149,7 @@ class _CircularMenu extends StatelessWidget {
 }
 
 class _InfoBarberHeader extends StatelessWidget {
-  const _InfoBarberHeader({
-    super.key,
-  });
+  const _InfoBarberHeader();
 
   @override
 Widget build(BuildContext context) {

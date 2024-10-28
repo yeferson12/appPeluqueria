@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../infrastruture/models/models.dart';
+import '../../screens/infoBarber/schedule_calendar_modal.dart';
+import '../widgets.dart';
 
 class ImgSlideShow extends StatelessWidget {
   final List<ImgsBarber> imgBarber;
@@ -75,14 +77,14 @@ class _Slide extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Flexible( // Ajustar el texto para evitar desbordamiento
+            const Flexible(
               child: Text(
                 'Yeferson Monsalve',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 15,
                 ),
-                overflow: TextOverflow.ellipsis, // Si el texto es muy largo
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             SizedBox(height: size.height * 0.015),
@@ -107,17 +109,25 @@ class _Slide extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                // Acción al presionar el icono
-              },
-              child: Image.asset(
-                'assets/cuchilla_b.png',
-                width: size.width * 0.2,
-                height: size.height * 0.07,
-                fit: BoxFit.cover,
+            const SizedBox( height: 10,),
+             Center(
+                child: BtnTrasparantWidget(
+                  title: "Agenda",
+                  onPress: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,  // Permite que el modal ocupe más espacio
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(25.0),
+                        ),
+                      ),
+                      builder: (context) =>  ScheduleCalendarModal(),
+                    );
+                  },
+                ),
               ),
-            ),
+            const SizedBox( height: 10,),
           ],
         ),
       ),

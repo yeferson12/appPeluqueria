@@ -3,8 +3,9 @@ import 'package:peluquerias/config/blocs/blocs.dart';
 import 'package:peluquerias/config/router/app_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:peluquerias/presentation/services/services.dart';
-
-void main() {
+import 'package:flutter_localizations/flutter_localizations.dart';
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp( 
     MultiBlocProvider(
       providers: [
@@ -29,6 +30,15 @@ class MyApp extends StatelessWidget {
     return  MaterialApp.router(
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', 'US'), // Inglés
+        Locale('es', 'ES'), // Español (España)
+      ],
       // theme: AppTheme( selectedColor: selectedColor, isDarkmodo: isDarkmode ).getTheme()
     );
   }
