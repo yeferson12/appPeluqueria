@@ -41,8 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: BlocBuilder<LocationBloc, LocationState>(
         builder: (context, state) {
-          if (state.lastKnownLocation == null)
+          if (state.lastKnownLocation == null) {
             return const Center(child: Text('Espere por favor...'));
+          }
 
           return BlocBuilder<MapBloc, MapState>(
             builder: (context, mapState) {

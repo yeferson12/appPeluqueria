@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:peluquerias/presentation/screens/screens.dart';
 
-final appRouter = GoRouter(initialLocation: '/loadin-screen', routes: [
+final appRouter = GoRouter(initialLocation: '/login-screen', routes: [
   GoRoute(
     path: '/home-screen',
     name: HomeScreen.name,
@@ -16,5 +16,10 @@ final appRouter = GoRouter(initialLocation: '/loadin-screen', routes: [
     path: '/loadin-screen',
     name: LodingScreen.name,
     builder: (context, state) => const LodingScreen(),
+  ),
+  GoRoute(
+    path: '/login-screen',
+    name: LoginScreen.name,
+    builder: (context, state) => const LoginScreen(),
   ),
 ]);

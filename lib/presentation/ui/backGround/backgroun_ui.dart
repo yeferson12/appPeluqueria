@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../config/blocs/blocs.dart';
+import '../../../config/theme/themes.dart';
 import '../../views/views.dart';
 import '../../widgets/widgets.dart';
 
@@ -19,20 +20,7 @@ class BackGroud extends StatelessWidget {
             return Stack(
                   children: [
         
-                    Container(
-                      decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                            Color(0xffE24C3B),
-                            Color(0xffE24C3B),
-                            Color(0xffFBF3EF),
-                            Color(0xffFBF3EF),
-                            Color(0xff0088E0),
-                            Color(0xff0088E0),
-                          ])),
-                    ),
+                    bagraunColor,
         
                      if(state.isTab == 1)
                       const TabConfigurationView(),

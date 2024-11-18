@@ -12,3 +12,9 @@ export 'home/loading_screens.dart';
 //------------------------------------
 
 export 'infoBarber/schedule_calendar_modal.dart';
+
+//------------------------------------
+//? login
+//------------------------------------
+
+export './login/login_screen.dart';

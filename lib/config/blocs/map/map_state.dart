@@ -61,6 +61,6 @@ class MapState extends Equatable {
     infoMarkerBarbe, 
     markerToBarber, 
     isOpenMenuCircule,
-    selectedBarber ?? BarberResponse(id: 0, img: '',name: '',location: LatLng(40.43455, -34.345345), imgBarber: [])
+    selectedBarber ?? BarberResponse(id: 0, img: '',name: '',location: const LatLng(40.43455, -34.345345), imgBarber: [])
     ];
 }
