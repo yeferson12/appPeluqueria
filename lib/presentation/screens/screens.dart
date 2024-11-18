@@ -18,3 +18,8 @@ export 'infoBarber/schedule_calendar_modal.dart';
 //------------------------------------
 
 export './login/login_screen.dart';
+
+//------------------------------------
+//? salon
+//------------------------------------
+export './salon/salon_screen.dart';

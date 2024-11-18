@@ -5,6 +5,7 @@ import 'package:peluquerias/config/blocs/blocs.dart';
 
 import '../../ui/ui.dart';
 import '../../widgets/widgets.dart';
+import '../screens.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -50,11 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
               return   Stack(
                     children: [
                       const BackGroud(),
-                      AnimationDrawer(
-                        initialLocation: state.lastKnownLocation!,
-                        polylines: mapState.polylines.values.toSet(),
-                        markers: mapState.markers.values.toSet(),
-                        ),
+                      // AnimationDrawer(
+                      //   initialLocation: state.lastKnownLocation!,
+                      //   polylines: mapState.polylines.values.toSet(),
+                      //   markers: mapState.markers.values.toSet(),
+                      //   ),
+                      const SalonScreen()
                       
                       // const SearchBarWidget(),
                       // const ManualMarker(),

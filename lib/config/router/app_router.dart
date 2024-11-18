@@ -22,4 +22,9 @@ final appRouter = GoRouter(initialLocation: '/login-screen', routes: [
     name: LoginScreen.name,
     builder: (context, state) => const LoginScreen(),
   ),
+  GoRoute(
+    path: '/salon-screen',
+    name: SalonScreen.name,
+    builder: (context, state) => const SalonScreen(),
+  ),
 ]);
