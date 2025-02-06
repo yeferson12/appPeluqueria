@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:peluquerias/presentation/screens/screens.dart';
 
-final appRouter = GoRouter(initialLocation: '/login-screen', routes: [
+final appRouter = GoRouter(initialLocation: '/loadin-screen', routes: [
   GoRoute(
     path: '/home-screen',
     name: HomeScreen.name,
