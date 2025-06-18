@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:peluquerias/config/theme/themes.dart';
 
+import '../../ui/painters/background_ui.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -15,14 +17,12 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    final size = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Stack(
         children: [
-          // Fondo con degradado
-          bagraunColor,
+          const Background(),
           // Peine personalizado en vertical y grande
           // Positioned(
           //   top: screenHeight * 0.15,

@@ -142,7 +142,7 @@ class _BoxInfoDrawer extends StatelessWidget {
                 BoxShadow(
                     color: colorBlack,
                     blurRadius: 6,
-                    spreadRadius: -2,
+                    spreadRadius: -1,
                     blurStyle: BlurStyle.outer)
               ],
               borderRadius: BorderRadius.circular(10),

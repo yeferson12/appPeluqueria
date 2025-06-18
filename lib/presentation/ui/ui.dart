@@ -5,3 +5,4 @@ export './marker/end_marker_ui.dart';
 export './marker/start_marker_ui.dart';
 export './drawer/animation_drawer_ui.dart';
 export './backGround/backgroun_ui.dart';
+export './painters/background_ui.dart';

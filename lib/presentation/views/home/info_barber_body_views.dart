@@ -74,13 +74,10 @@ class InfobarberBody extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            const Text(
-                              'Conoce a nuestro equipo',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
+                            const _Titulos(titulo: 'Conoce a nuestro equipo'),
                             // _ListEmployes(listAvatar: svgList),
-                            ImgSlideShow(imgBarber: stateInfoBarber.selectedBarber!.imgBarber)
+                            ImgSlideShow(imgBarber: stateInfoBarber.selectedBarber!.imgBarber),
+                            const _Titulos(titulo: 'Conocenuestro Trabajo')
                           ],
                         ),
                       ),
@@ -90,6 +87,23 @@ class InfobarberBody extends StatelessWidget {
               )
             : Container();
       },
+    );
+  }
+}
+
+class _Titulos extends StatelessWidget {
+  final String titulo;
+  const _Titulos({
+    super.key,
+    required this.titulo
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      titulo,
+      style: const TextStyle(
+          fontWeight: FontWeight.bold, fontSize: 16),
     );
   }
 }

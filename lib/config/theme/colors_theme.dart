@@ -13,7 +13,6 @@ var bagraunColor = Container(
                             Color(0xffE24C3B),
                             Color(0xffE24C3B),
                             Color(0xffFBF3EF),
-                            Color(0xffFBF3EF),
                             Color(0xff0088E0),
                             Color(0xff0088E0),
                           ])),

@@ -23,3 +23,4 @@ export './login/login_screen.dart';
 //? salon
 //------------------------------------
 export './salon/salon_screen.dart';
+export './salon/salon_background_screen.dart';
