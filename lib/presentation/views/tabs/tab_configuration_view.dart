@@ -11,10 +11,10 @@ class TabConfigurationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> tuLista = [
-      'Elemento 1',
+      'Cambiar corte',
       'Elemento 2',
       'Elemento 3',
-      'Elemento 4',
+      'iniciar session como trabajador',
     ];
     final size = MediaQuery.of(context).size;
     final List<Widget> listWidget = [
@@ -94,10 +94,9 @@ class _LineAndBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: size.width * 0.6,
           height: size.height * 0.1,
-          padding: const EdgeInsets.only(left: 8),
           child: Stack(
             children: [
               Positioned(
